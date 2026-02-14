@@ -1,28 +1,48 @@
 """
 Supplementary Figure S2: Violin/Box Plot - Citation Count Distribution
-Shows the statistical distribution of bias citation counts across categories
+Shows the statistical distribution of bias citation counts across omics-specific categories
+with pairwise Mann-Whitney U tests and Bonferroni-corrected significance bars.
 """
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from scipy import stats
-from utils import load_data, get_category_color, save_figure
+from itertools import combinations
+from mapper import load_data, get_category_color, save_figure
+
+
+def draw_significance_bar(ax, x1, x2, y, p_corrected, h=0.5, lw=1.2):
+    """Draw a significance bracket between positions x1 and x2 at height y."""
+    if p_corrected >= 0.05:
+        return
+    if p_corrected < 0.001:
+        sig_text = '***'
+    elif p_corrected < 0.01:
+        sig_text = '**'
+    else:
+        sig_text = '*'
+    ax.plot([x1, x1, x2, x2], [y, y + h, y + h, y], lw=lw, color='black')
+    ax.text((x1 + x2) / 2, y + h, sig_text,
+            ha='center', va='bottom', fontsize=11, fontweight='bold')
+
 
 def create_violin_plot():
+    """Create violin plot showing citation count distributions"""
     # Set random seed for reproducibility
     np.random.seed(42)
 
-    """Create violin plot showing citation count distributions"""
-    # Load data
+    # Load data - exclude non-omics-specific categories
+    # (they aggregate biases across multiple fields, inflating citations)
     df = load_data()
+    excluded = {'Multi-omics', 'General_omics', 'Chinese Literature'}
+    df = df[~df['Category'].isin(excluded)].copy()
+
+    # Define category order (4 omics-specific categories)
+    category_order = ['Genomics', 'Transcriptomics', 'Metabolomics', 'Proteomics']
 
     # Create figure
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 8))
-
-    # Define category order
-    category_order = ['Genomics', 'Transcriptomics', 'Metabolomics', 'Proteomics',
-                      'Multi-omics', 'General_omics', 'Chinese Literature']
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 9))
 
     # Get colors for categories
     palette = [get_category_color(cat) for cat in category_order]
@@ -67,10 +87,39 @@ def create_violin_plot():
     ax1.set_xticks(range(len(category_order)))
     ax1.set_xticklabels(category_order, rotation=45, ha='right', fontsize=11)
     ax1.set_ylabel('Citation Count', fontsize=12, fontweight='bold')
-    ax1.set_title('Distribution of Citation Counts by Category\n(Violin + Box Plot)',
+    ax1.set_title('Distribution of Citation Counts\n(Violin + Box Plot, Pairwise Mann-Whitney U)',
                   fontsize=14, fontweight='bold', pad=15)
     ax1.grid(axis='y', alpha=0.3, linestyle='--')
     ax1.set_ylim(bottom=0)
+
+    # --- Pairwise Mann-Whitney U tests with Bonferroni correction ---
+    pairs = list(combinations(range(len(category_order)), 2))
+    n_comparisons = len(pairs)  # C(4,2) = 6
+
+    pairwise_results = []
+    for i1, i2 in pairs:
+        cat1, cat2 = category_order[i1], category_order[i2]
+        data1 = df[df['Category'] == cat1]['Final count'].values
+        data2 = df[df['Category'] == cat2]['Final count'].values
+        u_stat, p_value = stats.mannwhitneyu(data1, data2, alternative='two-sided')
+        p_corrected = min(p_value * n_comparisons, 1.0)
+        pairwise_results.append((i1, i2, cat1, cat2, u_stat, p_value, p_corrected))
+
+    # Draw significance bars for significant pairs
+    max_y = max([df[df['Category'] == cat]['Final count'].max() for cat in category_order])
+    bar_y_start = max_y * 1.08
+    bar_y_step = max_y * 0.09
+
+    # Sort by distance (adjacent pairs first) for cleaner layout
+    sig_pairs = [(i1, i2, p_corr) for i1, i2, _, _, _, _, p_corr in pairwise_results if p_corr < 0.05]
+    sig_pairs.sort(key=lambda x: abs(x[0] - x[1]))
+
+    for bar_idx, (i1, i2, p_corr) in enumerate(sig_pairs):
+        y = bar_y_start + bar_idx * bar_y_step
+        draw_significance_bar(ax1, i1, i2, y, p_corr)
+
+    if sig_pairs:
+        ax1.set_ylim(top=bar_y_start + len(sig_pairs) * bar_y_step + max_y * 0.06)
 
     # Plot 2: Swarm plot with individual points
     sns.violinplot(data=df, x='Category', y='Final count', order=category_order,
@@ -92,7 +141,8 @@ def create_violin_plot():
     save_figure(fig, 'figS2_violin_plot.png', output_dir='figures/supplementary')
 
     # Print summary statistics
-    print("\n=== Violin Plot Summary ===")
+    print("\n=== Violin Plot Summary (Omics-Specific Categories Only) ===")
+    print("Excluded: Multi-omics, General_omics, Chinese Literature")
     print("\nDescriptive statistics by category:")
     for cat in category_order:
         cat_data = df[df['Category'] == cat]['Final count']
@@ -107,17 +157,22 @@ def create_violin_plot():
         print(f"  Q3: {cat_data.quantile(0.75):.2f}")
 
     # Kruskal-Wallis test
-    print("\n=== Statistical Test ===")
+    print("\n=== Statistical Tests ===")
     groups = [df[df['Category'] == cat]['Final count'].values for cat in category_order]
     h_stat, p_value = stats.kruskal(*groups)
     print(f"Kruskal-Wallis H-test:")
     print(f"  H-statistic: {h_stat:.4f}")
     print(f"  p-value: {p_value:.6f}")
-
     if p_value < 0.05:
         print("  Result: Significant differences exist between categories (p < 0.05)")
     else:
-        print("  Result: No significant differences between categories (p ≥ 0.05)")
+        print("  Result: No significant differences between categories (p >= 0.05)")
+
+    # Pairwise Mann-Whitney U tests
+    print(f"\nPairwise Mann-Whitney U tests (Bonferroni-corrected, {n_comparisons} comparisons):")
+    for i1, i2, cat1, cat2, u_stat, p_val, p_corr in pairwise_results:
+        sig = '***' if p_corr < 0.001 else '**' if p_corr < 0.01 else '*' if p_corr < 0.05 else 'ns'
+        print(f"  {cat1} vs {cat2}: U={u_stat:.1f}, p={p_val:.6f}, p_corrected={p_corr:.6f} ({sig})")
 
     return fig
 

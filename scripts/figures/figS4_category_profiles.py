@@ -5,15 +5,16 @@ Small multiples showing top 10 biases for each omics category
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from utils import load_data, get_category_color, save_figure
+from mapper import load_data, get_category_color, save_figure, shorten_bias, merge_semantic_keywords
 
 def create_category_profiles():
     """Create small multiple bar charts for each category"""
     # Set random seed
     np.random.seed(42)
 
-    # Load data
+    # Load data and merge semantic keywords
     df = load_data()
+    df = merge_semantic_keywords(df)
 
     # Get categories
     categories = sorted(df['Category'].unique())
@@ -31,13 +32,8 @@ def create_category_profiles():
         # Get top 10 biases
         top10 = cat_df.nlargest(10, 'Final count')
 
-        # Shorten bias names
-        labels = []
-        for keyword in top10['Final_Keyword']:
-            if len(keyword) > 40:
-                labels.append(keyword[:37] + '...')
-            else:
-                labels.append(keyword)
+        # Shorten bias names using curated SHORT_NAMES
+        labels = [shorten_bias(kw) for kw in top10['Final_Keyword']]
 
         counts = top10['Final count'].values
 

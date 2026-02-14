@@ -88,7 +88,7 @@ omics-bias/
 │   └── bias.csv              # Source data (145 biases, 2,041 citations)
 ├── scripts/
 │   └── figures/
-│       ├── utils.py          # Shared utilities and color schemes
+│       ├── mapper.py         # Centralized mappings, utilities, and color schemes
 │       ├── generate_all_figures.py  # Master generation script
 │       ├── fig*.py           # Individual figure scripts (main)
 │       └── figS*.py          # Individual figure scripts (supplementary)
@@ -240,7 +240,7 @@ All dependencies are managed in [pyproject.toml](pyproject.toml):
 - Use meaningful variable names
 - Add docstrings to functions
 - Keep functions focused and small
-- Use the shared `utils.py` for common functionality
+- Use the shared `mapper.py` for common functionality
 - Follow existing color schemes in `CATEGORY_COLORS`
 
 ## Making Changes

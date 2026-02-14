@@ -37,11 +37,11 @@ def test_all_figure_scripts_exist() -> None:
         assert script_path.exists(), f"Missing figure script: {script}"
 
 
-def test_utils_module_exists() -> None:
-    """Verify the utils module exists and can be imported."""
+def test_mapper_module_exists() -> None:
+    """Verify the mapper module exists and can be imported."""
     repo_root = Path(__file__).resolve().parents[1]
-    utils_path = repo_root / "scripts" / "figures" / "utils.py"
-    assert utils_path.exists(), "Missing utils.py module"
+    mapper_path = repo_root / "scripts" / "figures" / "mapper.py"
+    assert mapper_path.exists(), "Missing mapper.py module"
 
 
 @pytest.mark.parametrize("script_name", MAIN_FIGURES[:2])  # Test first 2 main figures as smoke test

@@ -5,32 +5,19 @@ Circular diagram showing biases at each stage of the research pipeline
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
-from matplotlib.patches import Wedge, Circle, FancyBboxPatch
-from utils import load_data, save_figure
+from matplotlib.patches import Wedge, Circle, Patch
+from mapper import (load_data, save_figure, normalize_subcategories,
+                    STAGE_MAP, STAGE_COLORS, shorten_bias)
 
-def categorize_to_pipeline_stage(subcategory):
-    """Map subcategory to research pipeline stage"""
-    subcat_lower = subcategory.lower()
-
-    if 'data production' in subcat_lower or 'pre-analysis' in subcat_lower or 'pre analysis' in subcat_lower or 'prediction' in subcat_lower:
-        return 'Data Production'
-    elif 'technical' in subcat_lower or 'instrumental' in subcat_lower or 'hardware' in subcat_lower:
-        return 'Technical/Instrumental'
-    elif 'computational' in subcat_lower or 'analytical' in subcat_lower or 'software' in subcat_lower:
-        return 'Computational/Analytical'
-    elif 'reporting' in subcat_lower or 'interpretation' in subcat_lower or 'post-analysis' in subcat_lower:
-        return 'Reporting/Interpretation'
-    else:
-        return 'Other Challenges'
 
 def create_lifecycle_diagram():
     """Create circular lifecycle diagram with real bias data"""
-    # Load data
+    # Load data with normalized subcategories
     df = load_data()
+    df = normalize_subcategories(df)
 
-    # Add pipeline stage
-    df['Pipeline_Stage'] = df['Subcategory'].apply(categorize_to_pipeline_stage)
+    # Map to pipeline stages
+    df['Pipeline_Stage'] = df['Subcategory'].map(STAGE_MAP)
 
     # Get top biases for each stage
     stages_data = {}
@@ -38,28 +25,15 @@ def create_lifecycle_diagram():
               'Reporting/Interpretation', 'Other Challenges']
 
     for stage in stages:
-        stage_df = df[df['Pipeline_Stage'] == stage].nlargest(5, 'Final count')
-        biases = []
-        for _, row in stage_df.iterrows():
-            keyword = row['Final_Keyword']
-            count = row['Final count']
-            # Shorten long bias names
-            if len(keyword) > 35:
-                keyword = keyword[:32] + '...'
-            biases.append(f"{keyword}")
+        stage_df = df[df['Pipeline_Stage'] == stage].nlargest(3, 'Final count')
+        biases = [shorten_bias(row['Final_Keyword']) for _, row in stage_df.iterrows()]
         stages_data[stage] = biases
 
-    # Define colors for each stage
-    stage_colors = {
-        'Data Production': '#5DADE2',  # Light blue
-        'Technical/Instrumental': '#F39C12',  # Orange
-        'Computational/Analytical': '#9B59B6',  # Purple
-        'Reporting/Interpretation': '#48C9B0',  # Teal
-        'Other Challenges': '#EC7063'  # Red/pink
-    }
+    # Colors from shared STAGE_COLORS in mapper.py
+    stage_colors = STAGE_COLORS
 
     # Create figure
-    fig = plt.figure(figsize=(16, 16))
+    fig = plt.figure(figsize=(20, 18))
     ax = fig.add_subplot(111, aspect='equal')
 
     # Parameters for the circle
@@ -86,57 +60,32 @@ def create_lifecycle_diagram():
                      alpha=0.85)
         ax.add_patch(wedge)
 
-        # Calculate position for stage label (just outside the wedge)
+        # Calculate position for stage number (just outside the wedge)
         label_angle = np.radians(start_angle - angle_per_stage/2)
         label_radius = outer_radius + 0.08
         label_x = center[0] + label_radius * np.cos(label_angle)
         label_y = center[1] + label_radius * np.sin(label_angle)
 
-        # Add stage number only (name in legend)
-        stage_num = i + 1
-
-        ax.text(label_x, label_y, f"{stage_num}",
+        # Add stage number
+        ax.text(label_x, label_y, f"{i + 1}",
                ha='center', va='center',
-               fontsize=16, fontweight='bold',
+               fontsize=20, fontweight='bold',
                color='white',
                bbox=dict(boxstyle='circle,pad=0.3', facecolor=stage_colors[stage],
                         edgecolor='white', linewidth=3))
 
-        # Add only top 3 biases with SHORT names inside the wedge
+        # Position for bias text inside wedge — always horizontal
         text_radius = (outer_radius + inner_radius) / 2
         text_angle_rad = np.radians(start_angle - angle_per_stage/2)
         text_x = center[0] + text_radius * np.cos(text_angle_rad)
         text_y = center[1] + text_radius * np.sin(text_angle_rad)
 
-        # Format bias list - SHORTENED to first 2-3 words only
-        short_biases = []
-        for bias in stages_data[stage][:3]:  # Only top 3
-            # Take first 2-3 words or first 25 chars max
-            words = bias.split()
-            if len(words) <= 3:
-                short_biases.append(' '.join(words[:3]))
-            else:
-                short_biases.append(' '.join(words[:2]))
-
-        bias_text = '\n'.join([f"• {b}" for b in short_biases])
-
-        # Calculate rotation - ALWAYS keep text readable (never upside down)
-        rotation = (start_angle - angle_per_stage/2) - 90
-        # Keep text horizontal or nearly horizontal
-        if rotation < -90:
-            rotation += 180
-        if rotation > 90:
-            rotation -= 180
-        # Avoid steep angles
-        if rotation < -45:
-            rotation = 0
-        if rotation > 45:
-            rotation = 0
+        bias_text = '\n'.join([f"• {b}" for b in stages_data[stage]])
 
         ax.text(text_x, text_y, bias_text,
                ha='center', va='center',
-               fontsize=9,
-               rotation=rotation,
+               fontsize=15,
+               rotation=0,
                color='white',
                fontweight='bold',
                bbox=dict(boxstyle='round,pad=0.6',
@@ -150,10 +99,9 @@ def create_lifecycle_diagram():
                           linewidth=4)
     ax.add_patch(center_circle)
 
-    # Add center text - concise
     ax.text(center[0], center[1], 'Research\nPipeline',
            ha='center', va='center',
-           fontsize=16, fontweight='bold',
+           fontsize=20, fontweight='bold',
            color='#2C3E50')
 
     # Set axis limits and remove axes
@@ -162,16 +110,15 @@ def create_lifecycle_diagram():
     ax.axis('off')
 
     # Add title
-    fig.suptitle('Omics Research Pipeline - Top Biases by Stage',
-                fontsize=18, fontweight='bold', y=0.96, color='#2C3E50')
+    # fig.suptitle('Omics Research Pipeline - Top Biases by Stage',
+    #             fontsize=18, fontweight='bold', y=0.96, color='#2C3E50')
 
-    # Add compact legend on the right side
-    from matplotlib.patches import Patch
+    # Add legend
     legend_elements = [Patch(facecolor=stage_colors[stage], label=f"{i+1}. {stage}")
                       for i, stage in enumerate(stages)]
 
     ax.legend(handles=legend_elements, loc='center left', bbox_to_anchor=(1.05, 0.5),
-             fontsize=10, frameon=True, title='Pipeline Stages', title_fontsize=11)
+             fontsize=14, frameon=True, title='Pipeline Stages', title_fontsize=15)
 
     plt.tight_layout()
 
@@ -187,7 +134,6 @@ def create_lifecycle_diagram():
         for idx, row in stage_df.iterrows():
             print(f"  • {row['Final_Keyword']} ({int(row['Final count'])} citations)")
 
-    # Print total counts per stage
     print("\n\nTotal citations by stage:")
     for stage in stages:
         total = df[df['Pipeline_Stage'] == stage]['Final count'].sum()

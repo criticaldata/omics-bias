@@ -5,7 +5,8 @@ Shows both absolute and normalized distributions
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from utils import load_data, get_category_color, save_figure
+from mapper import (load_data, get_category_color, save_figure,
+                    normalize_subcategories, STAGE_MAP, merge_semantic_keywords)
 
 def create_stacked_bar():
     # Set random seed for reproducibility
@@ -14,23 +15,9 @@ def create_stacked_bar():
     """Create stacked bar chart showing bias distribution"""
     # Load data
     df = load_data()
-
-    # Simplify subcategory names for better visualization
-    # Extract the general type from subcategory
-    def categorize_subcategory(subcat):
-        subcat_lower = subcat.lower()
-        if 'data production' in subcat_lower or 'pre-analysis' in subcat_lower or 'pre analysis' in subcat_lower or 'prediction' in subcat_lower:
-            return 'Data Production'
-        elif 'technical' in subcat_lower or 'instrumental' in subcat_lower or 'hardware' in subcat_lower:
-            return 'Technical/Instrumental'
-        elif 'computational' in subcat_lower or 'analytical' in subcat_lower or 'software' in subcat_lower:
-            return 'Computational/Analytical'
-        elif 'reporting' in subcat_lower or 'interpretation' in subcat_lower or 'post-analysis' in subcat_lower:
-            return 'Reporting/Interpretation'
-        else:
-            return 'Other'
-
-    df['Subcategory_Type'] = df['Subcategory'].apply(categorize_subcategory)
+    df = normalize_subcategories(df)
+    df['Subcategory_Type'] = df['Subcategory'].map(STAGE_MAP).fillna('Other Challenges')
+    df = merge_semantic_keywords(df)
 
     # Aggregate by Category and Subcategory Type
     grouped = df.groupby(['Category', 'Subcategory_Type'])['Final count'].sum().reset_index()
@@ -40,7 +27,7 @@ def create_stacked_bar():
 
     # Reorder columns for consistent stacking
     subcat_order = ['Data Production', 'Technical/Instrumental',
-                    'Computational/Analytical', 'Reporting/Interpretation', 'Other']
+                    'Computational/Analytical', 'Reporting/Interpretation', 'Other Challenges']
     pivot = pivot[[col for col in subcat_order if col in pivot.columns]]
 
     # Calculate totals for sorting
@@ -57,7 +44,7 @@ def create_stacked_bar():
         'Technical/Instrumental': '#e67e22',
         'Computational/Analytical': '#9b59b6',
         'Reporting/Interpretation': '#2ecc71',
-        'Other': '#95a5a6'
+        'Other Challenges': '#95a5a6'
     }
 
     # Plot 1: Absolute counts
@@ -72,6 +59,7 @@ def create_stacked_bar():
     ax1.grid(axis='x', alpha=0.3, linestyle='--')
 
     # Add percentage labels in white on each segment (left panel - absolute counts)
+    # Use absolute segment width to decide visibility (short bars get crowded)
     for i, (idx, row) in enumerate(pivot.iterrows()):
         total = row.sum()
         cumulative = 0
@@ -79,13 +67,22 @@ def create_stacked_bar():
             value = row[col]
             if value > 0:
                 percentage = (value / total) * 100
-                # Only show label if segment is large enough (>3% to avoid clutter)
-                if percentage > 3:
-                    segment_center = cumulative + (value / 2)
+                segment_center = cumulative + (value / 2)
+                # Show label only when segment is wide enough in absolute terms
+                if value >= 55:
                     ax1.text(segment_center, i, f'{percentage:.1f}%',
                             ha='center', va='center',
-                            fontsize=9, fontweight='bold',
-                            color='white')
+                            fontsize=9, fontweight='bold', color='white')
+                elif value >= 25:
+                    # Shorter format + smaller font for narrower segments
+                    ax1.text(segment_center, i, f'{percentage:.0f}%',
+                            ha='center', va='center',
+                            fontsize=6.5, fontweight='bold', color='white')
+                elif value >= 15:
+                    # Minimal label for very narrow segments
+                    ax1.text(segment_center, i, f'{percentage:.0f}%',
+                            ha='center', va='center',
+                            fontsize=5.5, fontweight='bold', color='white')
                 cumulative += value
 
         # Add total value at the end of bar

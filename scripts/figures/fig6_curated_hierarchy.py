@@ -4,7 +4,7 @@ Clearer hierarchical view using sunburst chart instead of treemap
 """
 import pandas as pd
 import plotly.graph_objects as go
-from utils import load_data, get_category_color, save_plotly_figure
+from mapper import load_data, get_category_color, save_plotly_figure, normalize_subcategories
 import numpy as np
 
 def create_curated_hierarchy():
@@ -18,6 +18,7 @@ def create_curated_hierarchy():
     # Focus on the specified columns
     df_curated = df[['Category', 'Subcategory', 'Final_Keyword', 'Final count']].copy()
     df_curated = df_curated.dropna(subset=['Final_Keyword', 'Final count'])
+    df_curated = normalize_subcategories(df_curated)
 
     # Create data for sunburst
     labels = []

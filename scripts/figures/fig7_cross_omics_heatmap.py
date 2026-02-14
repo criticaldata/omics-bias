@@ -7,7 +7,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-from utils import load_data, save_figure, get_category_color, normalize_subcategories, SUBCATEGORY_ORDER
+from mapper import load_data, save_figure, get_category_color, normalize_subcategories, SUBCATEGORY_ORDER
 
 def create_cross_omics_heatmap():
     """Create heatmap showing bias distribution across omics categories"""

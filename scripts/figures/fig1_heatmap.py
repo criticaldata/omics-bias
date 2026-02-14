@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from scipy.cluster.hierarchy import linkage, dendrogram
 from scipy.spatial.distance import pdist
-from utils import load_data, save_figure, normalize_subcategories, SUBCATEGORY_ORDER
+from mapper import load_data, save_figure, normalize_subcategories, SUBCATEGORY_ORDER
 
 def create_heatmap():
     # Set random seed for reproducibility

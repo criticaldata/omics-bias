@@ -5,22 +5,8 @@ Shows how biases flow through the research pipeline stages
 import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
-from utils import load_data, get_category_color
-
-def categorize_to_pipeline_stage(subcategory):
-    """Map subcategory to research pipeline stage"""
-    subcat_lower = subcategory.lower()
-
-    if 'data production' in subcat_lower or 'pre-analysis' in subcat_lower or 'pre analysis' in subcat_lower:
-        return 'Data Production'
-    elif 'technical' in subcat_lower or 'instrumental' in subcat_lower or 'hardware' in subcat_lower:
-        return 'Technical/Instrumental'
-    elif 'computational' in subcat_lower or 'analytical' in subcat_lower or 'software' in subcat_lower:
-        return 'Computational/Analytical'
-    elif 'reporting' in subcat_lower or 'interpretation' in subcat_lower or 'post-analysis' in subcat_lower or 'prediction' in subcat_lower:
-        return 'Reporting/Interpretation'
-    else:
-        return 'Other Challenges'
+from mapper import (load_data, get_category_color, normalize_subcategories,
+                   STAGE_MAP, merge_semantic_keywords, shorten_bias)
 
 def create_pipeline_sankey():
     # Set random seed for reproducibility
@@ -29,9 +15,9 @@ def create_pipeline_sankey():
     """Create enhanced Sankey diagram organized by research pipeline"""
     # Load data
     df = load_data()
-
-    # Add pipeline stage
-    df['Pipeline_Stage'] = df['Subcategory'].apply(categorize_to_pipeline_stage)
+    df = normalize_subcategories(df)
+    df['Pipeline_Stage'] = df['Subcategory'].map(STAGE_MAP).fillna('Other Challenges')
+    df = merge_semantic_keywords(df)
 
     # For top biases, aggregate by category, pipeline stage, and keyword
     # Focus on biases with count >= 5 to avoid clutter
@@ -75,7 +61,7 @@ def create_pipeline_sankey():
         if ('bias', keyword) not in node_dict:
             node_dict[('bias', keyword)] = node_index
             # Truncate long keywords
-            display_name = keyword if len(keyword) < 50 else keyword[:47] + '...'
+            display_name = shorten_bias(keyword)
             nodes.append(display_name)
             node_colors.append('#95a5a6')  # Gray for keywords
             node_index += 1
@@ -158,7 +144,7 @@ def create_pipeline_sankey():
     )
 
     # Save figure using utility function
-    from utils import save_plotly_figure
+    from mapper import save_plotly_figure
     save_plotly_figure(fig, 'fig4_pipeline_sankey.png')
 
     # Print summary

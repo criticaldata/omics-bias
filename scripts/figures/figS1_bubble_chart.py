@@ -5,31 +5,19 @@ Highlights the most frequently cited biases across categories
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from utils import load_data, get_category_color, save_figure
+from mapper import (load_data, get_category_color, save_figure,
+                    normalize_subcategories, STAGE_MAP, shorten_bias, merge_semantic_keywords)
 
 def create_bubble_chart():
     """Create bubble chart showing top biases"""
     # Set random seed for reproducibility
     np.random.seed(42)
 
-    # Load data
+    # Load data with canonical stage mapping and semantic merging
     df = load_data()
-
-    # Categorize subcategories
-    def categorize_subcategory(subcat):
-        subcat_lower = subcat.lower()
-        if 'data production' in subcat_lower or 'pre-analysis' in subcat_lower or 'pre analysis' in subcat_lower or 'prediction' in subcat_lower:
-            return 'Data Production'
-        elif 'technical' in subcat_lower or 'instrumental' in subcat_lower or 'hardware' in subcat_lower:
-            return 'Technical/Instrumental'
-        elif 'computational' in subcat_lower or 'analytical' in subcat_lower or 'software' in subcat_lower:
-            return 'Computational/Analytical'
-        elif 'reporting' in subcat_lower or 'interpretation' in subcat_lower or 'post-analysis' in subcat_lower:
-            return 'Reporting/Interpretation'
-        else:
-            return 'Other'
-
-    df['Subcategory_Type'] = df['Subcategory'].apply(categorize_subcategory)
+    df = normalize_subcategories(df)
+    df['Subcategory_Type'] = df['Subcategory'].map(STAGE_MAP).fillna('Other Challenges')
+    df = merge_semantic_keywords(df)
 
     # Filter top biases (count >= 10) to avoid overcrowding
     df_top = df[df['Final count'] >= 10].copy()
@@ -43,7 +31,7 @@ def create_bubble_chart():
 
     # Define subcategory order for x-axis
     subcat_order = ['Data Production', 'Technical/Instrumental',
-                    'Computational/Analytical', 'Reporting/Interpretation', 'Other']
+                    'Computational/Analytical', 'Reporting/Interpretation', 'Other Challenges']
 
     # Create position mappings
     y_positions = {cat: i for i, cat in enumerate(category_order)}
@@ -105,12 +93,12 @@ def create_bubble_chart():
                 label_y = cat_idx + 0.3
                 for i, (_, row) in enumerate(top2.iterrows()):
                     keyword = row['Final_Keyword']
-                    display = keyword if len(keyword) < 25 else keyword[:22] + '...'
+                    display = shorten_bias(keyword)
 
                     # Offset second label
                     offset = 0 if i == 0 else 0.15
                     ax.text(subcat_idx, label_y + offset, display,
-                           fontsize=7, ha='center', va='center',
+                           fontsize=8, ha='center', va='center',
                            fontweight='bold', style='italic',
                            bbox=dict(boxstyle='round,pad=0.3', facecolor='white',
                                     alpha=0.8, edgecolor='gray', linewidth=0.5))

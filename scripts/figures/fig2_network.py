@@ -6,29 +6,41 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import networkx as nx
-from utils import load_data, get_category_color, save_figure
+from mapper import (load_data, get_category_color, save_figure,
+                    shorten_bias, normalize_subcategories, STAGE_MAP, STAGE_COLORS,
+                    merge_semantic_keywords)
 
 def create_network_graph():
     """Create network graph showing cross-omics bias relationships"""
     # Set random seed for reproducibility
     np.random.seed(42)
 
-    # Load data
+    # Load data, normalize subcategories, and merge semantic keywords
     df = load_data()
+    df = normalize_subcategories(df)
+    df['Stage'] = df['Subcategory'].map(STAGE_MAP).fillna('Other Challenges')
+    df = merge_semantic_keywords(df)
 
     # Create a bipartite network: Categories <-> Bias Keywords
     G = nx.Graph()
 
     # Track bias keywords that appear in multiple categories
     keyword_categories = {}
+    # Track primary stage for each keyword (from highest-count row)
+    keyword_stage = {}
     for _, row in df.iterrows():
         keyword = row['Final_Keyword']
         category = row['Category']
         count = row['Final count']
+        stage = row['Stage']
 
         if keyword not in keyword_categories:
             keyword_categories[keyword] = []
         keyword_categories[keyword].append((category, count))
+
+        # Assign stage from highest-count occurrence
+        if keyword not in keyword_stage or count > keyword_stage[keyword][1]:
+            keyword_stage[keyword] = (stage, count)
 
     # Add nodes and edges
     # Category nodes
@@ -64,13 +76,13 @@ def create_network_graph():
 
     # Use spring layout for bias nodes - tighter clustering
     bias_subgraph = G.subgraph(bias_nodes + category_nodes)
-    spring_pos = nx.spring_layout(bias_subgraph, k=2.5, iterations=100, seed=42, scale=6)
+    spring_pos = nx.spring_layout(bias_subgraph, k=3.5, iterations=150, seed=42, scale=7)
 
     # Position biases on the right - closer to center
     for bias in bias_nodes:
         if bias in spring_pos:
             # Reduced scaling for better distribution
-            pos[bias] = (spring_pos[bias][0] * 1.5 + 3, spring_pos[bias][1] * 1.8)
+            pos[bias] = (spring_pos[bias][0] * 1.8 + 3.5, spring_pos[bias][1] * 2.0)
 
     # Create figure - slightly smaller since nodes are closer
     fig, ax = plt.subplots(figsize=(20, 16))
@@ -91,23 +103,20 @@ def create_network_graph():
                           node_color=cat_colors, node_size=2000,
                           alpha=0.9, ax=ax, edgecolors='white', linewidths=2)
 
-    # Draw bias nodes (smaller)
-    # Color by number of connections (universal biases)
+    # Draw bias nodes - color by subcategory (pipeline stage), size by universality
     bias_colors = []
+    bias_sizes = []
     for bias in bias_nodes:
+        # Color by pipeline stage
+        stage = keyword_stage.get(bias, ('Other Challenges', 0))[0]
+        bias_colors.append(STAGE_COLORS.get(stage, '#95a5a6'))
+        # Size by number of connected categories (universality)
         num_connections = len([n for n in G.neighbors(bias) if n in category_nodes])
-        if num_connections >= 4:  # Universal bias
-            bias_colors.append('#e74c3c')  # Red for universal
-        elif num_connections >= 3:
-            bias_colors.append('#f39c12')  # Orange
-        elif num_connections >= 2:
-            bias_colors.append('#3498db')  # Blue
-        else:
-            bias_colors.append('#95a5a6')  # Gray
+        bias_sizes.append(300 + num_connections * 150)  # 450 (1 field) to 900+ (4+ fields)
 
     nx.draw_networkx_nodes(G, pos, nodelist=bias_nodes,
-                          node_color=bias_colors, node_size=500,
-                          alpha=0.7, ax=ax, edgecolors='white', linewidths=1)
+                          node_color=bias_colors, node_size=bias_sizes,
+                          alpha=0.8, ax=ax, edgecolors='white', linewidths=1)
 
     # Draw labels
     # Category labels
@@ -119,33 +128,43 @@ def create_network_graph():
     bias_labels = {}
     for bias in bias_nodes:
         num_connections = len([n for n in G.neighbors(bias) if n in category_nodes])
-        # Get max count for this bias
         max_count = max([G[bias][cat]['weight'] for cat in G.neighbors(bias) if cat in category_nodes])
 
         # Show label for biases in 2+ categories OR high citation count
         if num_connections >= 2 or max_count >= 15:
-            # Truncate long labels
-            label = bias if len(bias) < 40 else bias[:37] + '...'
-            bias_labels[bias] = label
+            bias_labels[bias] = shorten_bias(bias)
 
-    nx.draw_networkx_labels(G, pos, bias_labels, font_size=8, ax=ax)
+    # Render bias labels with bbox backgrounds for readability
+    for node, label in bias_labels.items():
+        x, y = pos[node]
+        ax.text(
+            x, y + 0.35, label,
+            fontsize=7, ha='center', va='bottom',
+            bbox=dict(boxstyle='round,pad=0.2', facecolor='white',
+                      alpha=0.85, edgecolor='#cccccc', linewidth=0.5),
+        )
 
     # Title and legend
-    ax.set_title('Cross-Omics Bias Relationship Network\n(Node size: Category vs Bias | Edge width: Citation count)',
+    ax.set_title('Cross-Omics Bias Relationship Network\n'
+                 '(Node color: Pipeline stage | Node size: Cross-field universality | Edge width: Citation count)',
                  fontsize=16, fontweight='bold', pad=20)
 
-    # Create custom legend
+    # Create custom legend for pipeline stage colors
     from matplotlib.patches import Patch
+    from matplotlib.lines import Line2D
     legend_elements = [
-        Patch(facecolor='#e74c3c', label='Universal bias (4+ fields)'),
-        Patch(facecolor='#f39c12', label='Common bias (3 fields)'),
-        Patch(facecolor='#3498db', label='Shared bias (2 fields)'),
-        Patch(facecolor='#95a5a6', label='Field-specific bias')
+        Patch(facecolor=color, label=stage, alpha=0.8)
+        for stage, color in STAGE_COLORS.items()
     ]
+    # Add node size legend entries
+    legend_elements.append(Line2D([0], [0], marker='o', color='w', markerfacecolor='gray',
+                                  markersize=8, label='1 field (specific)'))
+    legend_elements.append(Line2D([0], [0], marker='o', color='w', markerfacecolor='gray',
+                                  markersize=14, label='4+ fields (universal)'))
     ax.legend(
         handles=legend_elements,
         loc='upper left',
-        fontsize=10,
+        fontsize=9,
         bbox_to_anchor=(0, 0.98),
         frameon=True,
         fancybox=True,

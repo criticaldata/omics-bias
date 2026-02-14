@@ -2,7 +2,33 @@
 
 **Paper:** "Bias in Omics Data Beyond Non-Representativeness" by Salarikia et al.
 **Data Source:** 145 bias entries across 7 omics categories from systematic literature review (2019-2024)
-**Last Updated:** 2026-02-07
+**Last Updated:** 2026-02-14
+
+---
+
+## Table of Contents
+
+### Main Figures
+1. [Figure 1: Overview Heatmap](#figure-1-overview-heatmap---bias-landscape-across-omics-categories)
+2. [Figure 1.1: Lifecycle Diagram](#figure-11-omics-research-pipeline---lifecycle-bias-distribution)
+3. [Figure 2: Network Graph](#figure-2-network-graph---cross-omics-bias-relationships)
+4. [Figure 3: Chinese Literature Comparison](#figure-3-chinese-literature-comparison---unique-bias-contributions)
+5. [Figure 4: Pipeline Sankey](#figure-4-enhanced-pipeline-sankey---bias-flow-through-research-stages)
+6. [Figure 5: Stacked Bar Chart](#figure-5-stacked-bar-chart---bias-distribution-by-omics-category)
+7. [Figure 6: Curated Hierarchy (Sunburst)](#figure-6-curated-bias-hierarchy---sunburst-visualization)
+8. [Figure 7: Cross-Omics Heatmap](#figure-7-cross-omics-heatmap---bias-distribution-across-categories)
+
+### Supplementary Figures
+- [Figure S1: Bubble Chart](#supplementary-figure-s1-top-biases-bubble-chart)
+- [Figure S2: Violin/Box Plots](#supplementary-figure-s2-distribution-violinbox-plots)
+- [Figure S4: Category Profiles](#supplementary-figure-s4-category-specific-bias-profiles)
+
+### Tables & Technical Details
+- [Subcategory Normalization](#subcategory-normalization)
+- [Chinese Keyword Harmonization](#chinese-keyword-harmonization)
+- [Semantic Keyword Merging](#semantic-keyword-merging)
+- [Data Statistics Summary](#data-statistics-summary)
+- [Questions & Uncertainties for Review](#questions--uncertainties-for-review)
 
 ---
 
@@ -28,7 +54,9 @@ figures/
 
 ![Figure 1 - Heatmap](figures/main/png/fig1_heatmap.png)
 
-*This comprehensive heatmap displays the distribution of 2,041 citations across 18 bias subcategories (rows) and 7 omics fields (columns). Rows are hierarchically clustered to reveal related bias patterns, while color intensity represents citation counts with darker shades indicating higher frequency. The visualization reveals that General_omics - Data Production exhibits the highest concentration (103 citations), while the clustering pattern shows distinct field-specific bias profiles. Cell annotations provide exact citation counts for precise interpretation.*
+*This comprehensive heatmap displays the distribution of 2,041 citations across 5 bias subcategories (rows) and 7 omics fields (columns). Rows are hierarchically clustered to reveal related bias patterns, while color intensity represents citation counts with darker shades indicating higher frequency. The visualization reveals that General_omics - Data Production exhibits the highest concentration (103 citations), while the clustering pattern shows distinct field-specific bias profiles. Cell annotations provide exact citation counts for precise interpretation.*
+
+**How each cell value is calculated:** Each cell = sum of `Final count` from `data/bias.csv` for all individual bias keywords belonging to that (Category, Subcategory) pair. For example, Genomics × Data Production Biases = 49, which is the sum of 4 keywords: Selection/ascertainment (13) + Tissue/cell-type heterogeneity (13) + Lack of Population-Specific Databases (3) + Sample size/underpowered (4) + Ancestry/Population Bias (16). Subcategory names are normalized from 18 curator variants to 5 canonical stages (see [Subcategory Normalization](#subcategory-normalization)).
 
 **Files:**
 - PNG: `figures/main/png/fig1_heatmap.png`
@@ -42,7 +70,7 @@ figures/
 
 ![Figure 1.1 - Lifecycle](figures/main/png/fig1_1_lifecycle.png)
 
-*This circular visualization maps bias distribution across the five critical stages of the omics research pipeline: Data Production, Technical/Instrumental, Computational/Analytical, Reporting/Interpretation, and Other Challenges. Each wedge is sized proportionally to total citations at that stage, with Computational/Analytical showing the highest concentration (504 citations). The diagram displays the top 3 most-cited biases within each stage using shortened labels for readability, with stage numbers referenced in the right-side legend. This lifecycle approach mirrors AI bias frameworks, making bias sources immediately identifiable at each research phase.*
+*This circular visualization maps bias distribution across the five canonical pipeline stages: (1) Data Production, (2) Technical/Instrumental, (3) Computational/Analytical, (4) Reporting/Interpretation, and (5) Other Challenges. Each wedge displays the top 3 most-cited biases within that stage using shortened labels for readability. Subcategory names are normalized from 18 curator variants to these 5 canonical stages (see [Subcategory Normalization](#subcategory-normalization)). Computational/Analytical shows the highest citation concentration (504 citations, 35 biases), followed by Data Production (479 citations) and Technical/Instrumental (471 citations). Reporting/Interpretation receives the least attention (176 citations, 15 biases), highlighting a gap in research focus on downstream transparency.*
 
 **Files:**
 - PNG: `figures/main/png/fig1_1_lifecycle.png`
@@ -56,7 +84,7 @@ figures/
 
 ![Figure 2 - Network](figures/main/png/fig2_network.png)
 
-*This network graph reveals connectivity patterns between omics categories (large colored nodes on the left) and specific bias keywords (small nodes on the right). Node coloring indicates bias universality: red nodes represent universal biases appearing in 4+ fields, orange in 3 fields, blue in 2 fields, and gray for field-specific biases. Edge thickness corresponds to citation counts, showing the strength of category-bias relationships. The predominantly gray bias nodes demonstrate that most biases are field-specific rather than cross-cutting, with only a handful of truly universal concerns. This pattern suggests that bias mitigation strategies should be tailored to individual omics domains rather than applying universal solutions.*
+*This network graph reveals connectivity patterns between omics categories (large colored nodes on the left) and specific bias keywords (smaller nodes on the right). Bias node color indicates the pipeline stage (subcategory): Data Production (light blue), Technical/Instrumental (orange), Computational/Analytical (purple), Reporting/Interpretation (teal), and Other Challenges (red). Bias node size encodes cross-field universality—larger nodes appear in more omics categories. Edge thickness corresponds to citation counts, showing the strength of category-bias relationships. The visualization reveals that most biases are field-specific rather than cross-cutting, with only a handful of truly universal concerns spanning 4+ categories. This pattern suggests that bias mitigation strategies should be tailored to individual omics domains while attending to the pipeline stage where each bias arises.*
 
 **Files:**
 - PNG: `figures/main/png/fig2_network.png`
@@ -70,7 +98,7 @@ figures/
 
 ![Figure 3 - Chinese Comparison](figures/main/png/fig3_chinese_comparison.png)
 
-*This two-panel visualization demonstrates the unique contribution of Chinese-language literature to omics bias identification. The left panel uses non-overlapping circles to show that all 20 Chinese-identified biases are completely unique with zero overlap with other omics fields—a 100% uniqueness rate highlighted in the red box. The right panel ranks the top 5 unique Chinese biases by citation count, with Population Underrepresentation (22 citations) and Short-read limitations (21 citations) leading. This stark separation validates the critical importance of multilingual systematic reviews in comprehensive bias cataloging, as a substantial body of knowledge would be missed by English-only searches.*
+*This two-panel visualization compares Chinese-language literature biases with other omics fields after keyword harmonization (see [Chinese Keyword Harmonization](#chinese-keyword-harmonization)). The left panel uses overlapping Venn-style circles: 18 of 20 original Chinese keywords had equivalents in other categories via the harmonization map, but since some map to the same target keyword, the final unique set is 18 Chinese keywords — of which 16 are shared with other fields and 2 are truly unique. They were previously reported as "100% unique" due to different phrasing by Chinese curators. The right panel displays the 2 truly unique Chinese biases that have no equivalent in other fields. This harmonized view reveals that Chinese-language literature largely corroborates biases found in English sources using independent terminology, while still contributing genuinely novel perspectives.*
 
 **Files:**
 - PNG: `figures/main/png/fig3_chinese_comparison.png`
@@ -84,7 +112,7 @@ figures/
 
 ![Figure 4 - Pipeline Sankey](figures/main/png/fig4_pipeline_sankey.png)
 
-*This Sankey diagram traces the flow of 2,529 citations through three levels: omics categories (left), research pipeline stages (center), and specific high-impact biases (right, showing only biases with ≥10 citations). Flow ribbons are proportionally sized by citation count, making dominant pathways immediately apparent. Multi-omics contributes the largest initial flow (399 citations), which predominantly channels into the Computational/Analytical stage (479 total citations)—the thickest middle node. The diagram reveals how different omics fields contribute to various research stages and which specific biases emerge as most problematic at each junction, enabling targeted intervention planning.*
+*This Sankey diagram traces the flow of 2,041 citations through three levels: omics categories (left), research pipeline stages (center), and specific high-impact biases (right, showing only biases with ≥10 citations). Flow ribbons are proportionally sized by citation count, making dominant pathways immediately apparent. Multi-omics contributes the largest initial flow (399 citations), which predominantly channels into the Computational/Analytical stage (504 total citations)—the thickest middle node. The diagram reveals how different omics fields contribute to various research stages and which specific biases emerge as most problematic at each junction, enabling targeted intervention planning.*
 
 **Files:**
 - PNG: `figures/main/png/fig4_pipeline_sankey.png`
@@ -128,8 +156,7 @@ figures/
 
 *This heatmap visualizes the distribution of bias subcategories (rows) across omics fields (columns) using citation count sums, with hierarchical clustering applied to rows to group related bias types. While structurally similar to Figure 1, this visualization differs in its analytical purpose and data aggregation: Figure 1 shows the overall bias landscape optimized for identifying hotspots and category comparisons, while Figure 7 emphasizes cross-field bias patterns through clustering that reveals which bias subcategories behave similarly across omics domains. The row dendrogram (left) shows clustering relationships, grouping subcategories that appear in similar proportions across fields. This clustered view is particularly valuable for identifying field-specific versus cross-cutting bias patterns and understanding which bias types co-occur, complementing Figure 1's straightforward landscape overview.*
 
-**Difference from Figure 1:**
-Both figures use the same underlying data (2,041 citations across subcategories and categories), but serve different analytical purposes. Figure 1 provides an unsorted, comprehensive overview optimized for quick identification of high-citation combinations. Figure 7 applies hierarchical clustering to reveal hidden patterns in how bias subcategories relate to each other across fields, enabling discovery of bias type families and cross-domain similarities not apparent in the alphabetical view.
+**How each cell value is calculated:** Same as Figure 1 — each cell = sum of `Final count` from `data/bias.csv` for all bias keywords in that (Category, Subcategory) pair. Rows are ordered by pipeline stage. Subcategory names are normalized from 18 curator variants to 5 canonical stages (see [Subcategory Normalization](#subcategory-normalization)).
 
 **Files:**
 - PNG: `figures/main/png/fig7_cross_omics_heatmap.png`
@@ -145,7 +172,7 @@ Both figures use the same underlying data (2,041 citations across subcategories 
 
 ![Supplementary Figure S1 - Bubble Chart](figures/supplementary/png/figS1_bubble_chart.png)
 
-*This bubble chart highlights the most frequently cited biases (≥10 citations, 116 total biases shown) positioned by omics category (y-axis) and bias subcategory type (x-axis). Bubble size is proportional to citation count, making the most critical biases visually prominent. The largest bubble represents "Batch effects & Instrument Differences" with 31 citations in Multi-omics. Spatial jitter prevents overlap while maintaining categorical grouping. The visualization reveals that high-impact biases cluster predominantly in Technical/Instrumental and Computational/Analytical subcategories, with relatively fewer critical biases in Reporting/Interpretation. Labels are shown only for biases with ≥25 citations to maintain readability, allowing readers to quickly identify the most urgent concerns requiring immediate attention.*
+*This bubble chart highlights the most frequently cited biases (≥10 citations after semantic merging) positioned by omics category (y-axis) and bias subcategory type (x-axis). Bubble size is proportional to citation count, making the most critical biases visually prominent. After semantic merging, the largest bubble represents "Batch Effects & Instrument Differences" in Metabolomics (50 combined citations from 3 merged keyword variants). Spatial jitter prevents overlap while maintaining categorical grouping. The visualization reveals that high-impact biases cluster predominantly in Technical/Instrumental and Computational/Analytical subcategories, with relatively fewer critical biases in Reporting/Interpretation. Labels are shown only for biases with ≥25 citations to maintain readability, allowing readers to quickly identify the most urgent concerns requiring immediate attention.*
 
 **Files:**
 - PNG: `figures/supplementary/png/figS1_bubble_chart.png`
@@ -155,11 +182,11 @@ Both figures use the same underlying data (2,041 citations across subcategories 
 
 ### Supplementary Figure S2: Distribution Violin/Box Plots
 
-**Type:** Violin + box plot overlay with swarm plot
+**Type:** Violin + box plot overlay with swarm plot and pairwise significance bars
 
 ![Supplementary Figure S2 - Violin Plot](figures/supplementary/png/figS2_violin_plot.png)
 
-*This dual-panel statistical visualization reveals citation count distributions across the seven omics categories. The left panel combines violin plots (showing distribution density via shape width) with overlaid box plots indicating median (red line), interquartile range (box), and whiskers (1.5× IQR). The right panel adds individual swarm points representing each bias, enabling identification of outliers and distribution granularity. General_omics exhibits the highest mean (19.20 citations) and median (19.00), while Proteomics shows the lowest (mean 6.20, median 6.00). Metabolomics displays the highest variability (SD = 6.42) visible as a wide violin shape. The Kruskal-Wallis test confirms statistically significant differences between categories (p < 0.001), validating that bias attention varies meaningfully across omics domains and justifying field-specific analysis approaches.*
+*This dual-panel statistical visualization compares citation count distributions across the four omics-specific categories (Genomics, Transcriptomics, Metabolomics, Proteomics), excluding Multi-omics, General_omics, and Chinese Literature because those categories aggregate biases across multiple fields and inflate citation counts. The left panel combines violin plots (distribution density) with overlaid box plots showing median (red line), interquartile range (box), and whiskers (1.5× IQR), plus pairwise Mann-Whitney U significance bars with Bonferroni correction (6 comparisons; \* p<0.05, \*\* p<0.01, \*\*\* p<0.001). The right panel adds individual swarm points representing each bias for granular distribution inspection. The Kruskal-Wallis test assesses overall group differences, while the pairwise bars identify which specific category pairs differ significantly — enabling precise field-to-field comparisons rather than a single omnibus result.*
 
 **Files:**
 - PNG: `figures/supplementary/png/figS2_violin_plot.png`
@@ -206,23 +233,9 @@ Both figures use the same underlying data (2,041 citations across subcategories 
 
 ## Technical Specifications
 
-### Design Consistency
-- **Resolution:** 300 DPI (PNG)
-- **Vector:** PDF for all figures (publication quality)
-- **Color scheme:** Consistent across all figures
-  - Genomics: #3498db (Blue)
-  - Transcriptomics: #2ecc71 (Green)
-  - Metabolomics: #e67e22 (Orange)
-  - Proteomics: #9b59b6 (Purple)
-  - Multi-omics: #e74c3c (Red)
-  - General_omics: #f39c12 (Gold)
-  - Chinese Literature: #1abc9c (Teal)
-- **Font:** Arial/Helvetica, 8pt minimum
-- **Reproducibility:** All figures use `np.random.seed(42)`
-
 ### Subcategory Normalization
 
-Different curators named the same pipeline stages differently across categories. Figures 1 and 7 apply a normalization mapping (defined in `scripts/figures/utils.py`) to consolidate 18 raw subcategory names into 5 canonical stages:
+Different curators named the same pipeline stages differently across categories. Figures 1 and 7 apply a normalization mapping (defined in `scripts/figures/mapper.py`) to consolidate 18 raw subcategory names into 5 canonical stages:
 
 | Canonical Name | Original names in CSV |
 |---|---|
@@ -233,6 +246,54 @@ Different curators named the same pipeline stages differently across categories.
 | Other Biases / Challenges | "Other Biases / Challenges", "Other Biases / Challenges / Limitations" |
 
 The raw CSV is **not** modified — the mapping is applied at figure generation time only.
+
+### Chinese Keyword Harmonization
+
+Chinese Literature curators used different phrasing for bias concepts that already exist in other categories. This caused Figure 3 to incorrectly show "100% unique biases." The mapping below (defined in `scripts/figures/mapper.py` as `CHINESE_KEYWORD_MAP`) harmonizes Chinese keywords with their equivalents from other categories. Applied at figure generation time — the CSV is **not** modified.
+
+| # | Chinese Literature Keyword | Match? | Replace with (from other category) | Confirm |
+|---|---|---|---|---|
+| 1 | Participation–power limitation | YES | Sample size/underpowered (Genomics) | [ ] |
+| 2 | Handling-related variability bias | YES | Sample Handling, Quality & Degradation (Multi-omics) | [ ] |
+| 3 | Context-driven missingness bias | YES | Dropout Events / Sparsity (Transcriptomics) | [ ] |
+| 4 | Short-read sequencing limitations | YES | Sequencing Technology Limitations (Genomics) | [ ] |
+| 5 | Allelic dropout & coverage bias | YES | Detection/capture limitations... (Multi-omics) | [ ] |
+| 6 | Batch effects & platform variability | YES | Platform Variability & Batch Effects (General_omics) | [ ] |
+| 7 | Metabolomics technical limits | YES | Platform differences & Sensitivity, Specificity & Coverage Limitations (Metabolomics) | [ ] |
+| 8 | Database-driven coverage gaps | YES | Reference Database Gaps & Errors (General_omics) | [ ] |
+| 9 | Haplotype phasing & complex admixture errors | **UNIQUE** | — (population genetics-specific, no equivalent) | N/A |
+| 10 | Database dependence & annotation bias | YES | Database/Annotation Gaps & Standardization (Proteomics) | [ ] |
+| 11 | Subjectivity in analysis thresholds | YES | Lack of Standardization (Genomics) | [ ] |
+| 12 | Reproducibility & validation gaps | YES | Reproducibility, Validation & Cost (General_omics) | [ ] |
+| 13 | Taxonomic & naming conflicts | **UNIQUE** | — (taxonomy-specific classification, no equivalent) | N/A |
+| 14 | Clinical translation barriers | YES | Misaligned translation paradigm (Multi-omics) | [ ] |
+| 15 | Population Underrepresentation | YES | Ancestry/Population Bias (Genomics) | [ ] |
+| 16 | Small Sample Size & Recruitment Barriers | YES | Sample size/underpowered (Genomics) | [ ] |
+| 17 | Reference Genome & Database Bias | YES | Reference Database Gaps & Errors (General_omics) | [ ] |
+| 18 | Data Integration Challenges | YES | Data Integration & Pipeline Issues (Multi-omics) | [ ] |
+| 19 | Ethical, Consent & Cultural Barriers | YES | Ethics–data restriction bias (Multi-omics) | [ ] |
+| 20 | Resource Inequality & Economic Barriers | YES | High cost / resource barriers (Metabolomics) | [ ] |
+
+**Result:** 18 matches, 2 truly unique (#9, #13). After harmonization, Figure 3 shows overlapping Venn circles instead of fully separated ones.
+
+> **Reviewer action:** Check each `[ ]` box after confirming the mapping is semantically correct. The 2 `N/A` entries are truly unique Chinese biases with no equivalent in other categories.
+
+### Semantic Keyword Merging
+
+Multiple curators independently named the same bias concept using different phrasing. To prevent double-counting in figures, semantically equivalent keywords are merged at figure generation time (defined in `scripts/figures/mapper.py` as `KEYWORD_MERGE_MAP`). The CSV is **not** modified — merging is applied via `merge_semantic_keywords()` which maps variant names to canonical forms and sums their citation counts.
+
+| Canonical Name | Merged Variants | Count |
+|---|---|---|
+| Batch Effects & Instrument Differences | "Batch effects & Instrument Differences", "Platform Variability & Batch Effects", "Instrument Drift & Batch Effects" | 3 |
+| Sample Heterogeneity | "Sample & Cohort Heterogeneity", "Sample Heterogeneity & Variability", "Sample Selection Bias & Heterogeneity" | 3 |
+| Lack of Standardization | "Lack of Standardization", "…& Benchmarks", "…& Interoperability", "…& Reproducibility", "…/Harmonization", "…/Validation", "Lack of standarization" (typo) | 7 |
+| Reference Database Gaps | "Reference Database Gaps & Errors", "Reference Genome & Database Bias", "Biased/Incomplete Reference Data" | 3 |
+| High Cost / Resource Barriers | "High Cost/Resource Barriers", "High cost / resource barriers", "High cost, input requirements, and scalability limits", "Cost, scalability & infrastructure burden…" | 4 |
+| Reproducibility & Validation | "Reproducibility & Correlation/Causation", "Reproducibility & validation gaps", "Reproducibility, Validation & Cost" | 3 |
+| Algorithmic / Model Bias | "Algorithm & Model Bias (especially AI/ML)", "Algorithmic/Model Bias" | 2 |
+| Amplification / PCR Bias | "Amplification & PCR bias (GC-content, primer bias, copy number skew)", "Amplification Bias" | 2 |
+
+**Total:** ~27 keyword variants merged into 8 canonical names. Applied to all figures.
 
 ### File Naming Convention
 - Main figures: `fig{N}_{description}.png/pdf`
@@ -264,13 +325,13 @@ The raw CSV is **not** modified — the mapping is applied at figure generation 
 | Proteomics | 20 | 124 | 6.20 | 6.00 |
 
 ### By Pipeline Stage
-| Stage | Citations | Percentage |
-|-------|-----------|------------|
-| Computational/Analytical | 479 | 23.5% |
-| Technical/Instrumental | 426 | 20.9% |
-| Other Challenges | 384 | 18.8% |
-| Data Production | 378 | 18.5% |
-| Reporting/Interpretation | 216 | 10.6% |
+| Stage | Citations | Biases | Percentage |
+|-------|-----------|--------|------------|
+| Computational/Analytical | 504 | 35 | 24.7% |
+| Data Production | 479 | 30 | 23.5% |
+| Technical/Instrumental | 471 | 35 | 23.1% |
+| Other Challenges | 411 | 30 | 20.1% |
+| Reporting/Interpretation | 176 | 15 | 8.6% |
 
 ---
 
@@ -279,7 +340,7 @@ The raw CSV is **not** modified — the mapping is applied at figure generation 
 All scripts located in: `scripts/figures/`
 
 **Implemented:**
-- `utils.py` - Shared utilities (data loading, colors, save functions)
+- `mapper.py` - Centralized mappings, data loading, colors, and save functions
 - `fig1_heatmap.py` - Overview heatmap
 - `fig1_1_lifecycle.py` - Circular lifecycle diagram
 - `fig2_network.py` - Network graph
@@ -299,17 +360,17 @@ All scripts located in: `scripts/figures/`
 
 ## Key Insights from Bias Analysis
 
-### 1. Chinese Literature Provides Unique Perspectives
-- **100% uniqueness:** All 20 biases from Chinese-language literature are completely distinct from English sources
-- **No overlap:** Zero shared biases with other omics categories, indicating fundamentally different framing and terminology
+### 1. Chinese Literature Corroborates and Extends Omics Bias Knowledge
+- **After keyword harmonization:** 18 of 20 Chinese biases describe the same concepts found in other categories — curators used independent phrasing (see [Chinese Keyword Harmonization](#chinese-keyword-harmonization))
+- **2 truly unique biases:** "Haplotype phasing & complex admixture errors" (population genetics-specific) and "Taxonomic & naming conflicts" (taxonomy-specific)
 - **Top Chinese biases:** Population Underrepresentation (22 citations), Short-read limitations (21 citations)
-- **Critical implication:** Monolingual systematic reviews miss substantial domain knowledge; multilingual approaches are essential
+- **Critical implication:** Chinese-language literature independently validates English-source findings while contributing genuinely novel perspectives; multilingual systematic reviews remain essential to capture the full picture
 
 ### 2. Computational/Analytical Stage Dominates Research Attention
-- **Highest citation concentration:** 479 citations (23.5% of total 2,041 citations)
-- **Second highest:** Technical/Instrumental biases (426 citations, 20.9%)
-- **Third:** Other Challenges (384 citations, 18.8%)
-- **Lowest:** Reporting/Interpretation (216 citations, 10.6%)
+- **Highest citation concentration:** 504 citations (24.7% of total 2,041 citations)
+- **Second highest:** Data Production biases (479 citations, 23.5%)
+- **Third:** Technical/Instrumental (471 citations, 23.1%)
+- **Lowest:** Reporting/Interpretation (176 citations, 8.6%)
 - **Interpretation:** Most bias concern focuses on data processing and analysis rather than experimental design or reporting transparency
 
 ### 3. Batch Effects Are the Single Most Critical Bias
@@ -319,7 +380,7 @@ All scripts located in: `scripts/figures/`
 - **Why it matters:** Technical variation can overwhelm biological signal, making batch effect correction a universal priority
 
 ### 4. Field-Specific Bias Profiles with Minimal Cross-Over
-- **Network analysis finding:** Predominantly grey nodes (field-specific) with very few red/orange nodes (universal biases)
+- **Network analysis finding:** Most bias nodes are small (single-field), with only a few large nodes indicating cross-field universality (see Figure 2)
 - **No truly universal biases:** Zero biases appear in all 7 categories
 - **Limited sharing:** Only a handful of biases appear in 2-3 categories
 - **Category-specific top biases:**
@@ -351,8 +412,8 @@ All scripts located in: `scripts/figures/`
 - **Implication:** Bias attention varies meaningfully across domains, justifying field-specific mitigation strategies
 
 ### 7. Data Production Biases Are Underappreciated
-- **Total citations:** 378 (18.5% of total)
-- **Fourth place** in pipeline stage ranking, despite being the earliest and most foundational stage
+- **Total citations:** 479 (23.5% of total)
+- **Second place** in pipeline stage ranking by citations, but first in the research workflow
 - **Key data production biases:**
   - Sample selection bias & heterogeneity (Metabolomics: 20 citations)
   - Cohort heterogeneity & confounders (Metabolomics: 24 citations)
@@ -360,7 +421,7 @@ All scripts located in: `scripts/figures/`
 - **Risk:** Upstream biases cascade through entire pipeline, but receive less attention than downstream analysis biases
 
 ### 8. Reporting and Reproducibility Receive Insufficient Attention
-- **Lowest pipeline stage:** Only 216 citations (10.6%)
+- **Lowest pipeline stage:** Only 176 citations (8.6%)
 - **Critical reporting biases identified:**
   - Incomplete metadata/methods reporting (Metabolomics: 15-24 citations)
   - Underreporting of negative results (13-15 citations)
@@ -376,10 +437,10 @@ All scripts located in: `scripts/figures/`
 ### 9. Top Subcategories Reveal Bias Hotspots
 **By total citations across all categories:**
 1. **Computational/Analytical Biases:** 504 citations (highest)
-2. **Instrumental/Technical/Hardware Biases:** 471 citations
-3. **Data Production Biases:** 479 citations
-4. **Other Biases/Challenges:** 384 citations
-5. **Reporting/Interpretation Biases:** 216 citations (lowest)
+2. **Data Production Biases:** 479 citations
+3. **Technical/Instrumental Biases:** 471 citations
+4. **Other Biases/Challenges:** 411 citations
+5. **Reporting/Interpretation Biases:** 176 citations (lowest)
 
 **Top specific subcategory-category combinations:**
 - General_omics → Data Production: 103 citations
@@ -457,6 +518,26 @@ Based on 2,041 citations across 145 biases:
 
 ---
 
-**Last Updated:** 2026-02-07
+---
+
+## Questions & Uncertainties for Review
+
+The following items were flagged during the audit. Please confirm or correct.
+
+| # | Item | Question | Status |
+|---|---|---|---|
+| Q1 | Chinese harmonization: rows 1 & 16 | Both "Participation–power limitation" and "Small Sample Size & Recruitment Barriers" map to "Sample size/underpowered". Confirm that these are indeed the same bias concept or whether they should remain distinct. | [ ] |
+| Q2 | Chinese harmonization: rows 8 & 17 | Both "Database-driven coverage gaps" and "Reference Genome & Database Bias" map to "Reference Database Gaps & Errors". Confirm these are the same concept. | [ ] |
+| Q3 | Semantic merge: Batch Effects cluster | After merging 3 variants, "Batch Effects & Instrument Differences" in Metabolomics jumps to 50 combined citations — making it the single highest-cited bias. Confirm the 3 source keywords ("Batch effects & Instrument Differences", "Platform Variability & Batch Effects", "Instrument Drift & Batch Effects") are truly the same concept and should be summed. | [ ] |
+| Q4 | Semantic merge: Standardization cluster | 7 variants are merged into "Lack of Standardization". The cluster is large and includes diverse qualifiers (benchmarks, interoperability, reproducibility, harmonization, validation). Confirm all 7 describe the same root concept, or whether some should be split. | [ ] |
+| Q5 | Semantic merge: Reproducibility cluster | "Reproducibility, Validation & Cost" is merged with "Reproducibility & Correlation/Causation". The former includes cost; the latter includes causation. Confirm these belong in the same cluster. | [ ] |
+| Q6 | Pipeline stage totals vs text | Previous versions of this document had incorrect pipeline stage totals (e.g., 479 for Computational/Analytical instead of the correct 504). These have been corrected in this version. Please verify the "By Pipeline Stage" table matches your expectations. | [ ] |
+| Q7 | Fig 6 sunburst: subcategory text truncation | Some outer-ring subcategory labels are still truncated in the plotly sunburst (e.g., "Technical / Instrumental Bi..."). This is a plotly rendering limitation at the current figure size. Confirm whether this is acceptable or if the label strategy should change. | [ ] |
+| Q8 | "Data / Prediction Biases" subcategory | This curator-supplied name is mapped to "Data Production Biases" via SUBCATEGORY_MAP. Confirm this is the correct assignment — "Prediction" could arguably belong in "Computational/Analytical". | [ ] |
+| Q9 | Fig S2: Category exclusion rationale | Multi-omics, General_omics, and Chinese Literature are excluded from the violin plot because they aggregate biases across multiple fields. Confirm this exclusion is appropriate for the paper's narrative. | [ ] |
+
+---
+
+**Last Updated:** 2026-02-14
 **Status:** All 11 figures implemented and generated
 **Data Source:** bias.csv (145 curated biases, 2,041 citations)
