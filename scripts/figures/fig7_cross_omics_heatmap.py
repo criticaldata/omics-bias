@@ -7,15 +7,16 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-from utils import load_data, save_figure, get_category_color
+from utils import load_data, save_figure, get_category_color, normalize_subcategories, SUBCATEGORY_ORDER
 
 def create_cross_omics_heatmap():
     """Create heatmap showing bias distribution across omics categories"""
     # Set random seed for reproducibility
     np.random.seed(42)
 
-    # Load data
+    # Load data and normalize subcategory names
     df = load_data()
+    df = normalize_subcategories(df)
 
     # Create frequency matrix using CITATION COUNTS, not just counts of biases
     freq_matrix = df.groupby(['Subcategory', 'Category'])['Final count'].sum().unstack(fill_value=0)
@@ -26,6 +27,9 @@ def create_cross_omics_heatmap():
 
     # Reorder columns
     freq_matrix = freq_matrix[[col for col in category_order if col in freq_matrix.columns]]
+
+    # Reorder rows by pipeline stage
+    freq_matrix = freq_matrix.reindex([s for s in SUBCATEGORY_ORDER if s in freq_matrix.index])
 
     # Create figure
     fig, ax = plt.subplots(figsize=(14, 10))

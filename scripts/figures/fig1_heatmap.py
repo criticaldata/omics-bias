@@ -8,15 +8,16 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from scipy.cluster.hierarchy import linkage, dendrogram
 from scipy.spatial.distance import pdist
-from utils import load_data, save_figure
+from utils import load_data, save_figure, normalize_subcategories, SUBCATEGORY_ORDER
 
 def create_heatmap():
     # Set random seed for reproducibility
     np.random.seed(42)
 
     """Create overview heatmap of bias landscape"""
-    # Load data
+    # Load data and normalize subcategory names
     df = load_data()
+    df = normalize_subcategories(df)
 
     # Aggregate data: Group by Category and Subcategory, sum Final count
     heatmap_data = df.groupby(['Category', 'Subcategory'])['Final count'].sum().reset_index()

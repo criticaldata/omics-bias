@@ -220,6 +220,20 @@ Both figures use the same underlying data (2,041 citations across subcategories 
 - **Font:** Arial/Helvetica, 8pt minimum
 - **Reproducibility:** All figures use `np.random.seed(42)`
 
+### Subcategory Normalization
+
+Different curators named the same pipeline stages differently across categories. Figures 1 and 7 apply a normalization mapping (defined in `scripts/figures/utils.py`) to consolidate 18 raw subcategory names into 5 canonical stages:
+
+| Canonical Name | Original names in CSV |
+|---|---|
+| Data Production Biases | "Data production bias", "Data Production/Pre Analysis Bias", "Data / Prediction Biases", "Data Production / Pre-Analytical Biases", "Data Production Biases" |
+| Technical / Instrumental Biases | "Technical/Instrumental biases", "Instrumental / Technical / Hardware Bias", "Instrumental / Technical / Hardware Biases", "Technical / Instrumental Biases" |
+| Computational / Analytical Biases | "Computational/Analytical Bias", "Analytical / Software / Computational Bias", "Analytical / Software Biases", "Computational / Analytical Biases" |
+| Reporting / Interpretation Biases | "Bias in Interpretation / Post-Analysis", "Reporting / Interpretation / Post-Analysis Bias", "Reporting / Interpretation / Post-Analysis Biases" |
+| Other Biases / Challenges | "Other Biases / Challenges", "Other Biases / Challenges / Limitations" |
+
+The raw CSV is **not** modified — the mapping is applied at figure generation time only.
+
 ### File Naming Convention
 - Main figures: `fig{N}_{description}.png/pdf`
 - Supplementary: `figS{N}_{description}.png/pdf`

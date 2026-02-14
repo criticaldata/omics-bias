@@ -16,6 +16,49 @@ CATEGORY_COLORS = {
     'Chinese Literature': '#1abc9c'  # Teal
 }
 
+# Mapping of curator-specific subcategory names → 5 canonical pipeline stages
+SUBCATEGORY_MAP = {
+    # Data Production
+    "Data production bias": "Data Production Biases",
+    "Data Production/Pre Analysis Bias": "Data Production Biases",
+    "Data / Prediction Biases": "Data Production Biases",
+    "Data Production / Pre-Analytical Biases": "Data Production Biases",
+    "Data Production Biases": "Data Production Biases",
+    # Technical / Instrumental
+    "Technical/Instrumental biases": "Technical / Instrumental Biases",
+    "Instrumental / Technical / Hardware Bias": "Technical / Instrumental Biases",
+    "Instrumental / Technical / Hardware Biases": "Technical / Instrumental Biases",
+    "Technical / Instrumental Biases": "Technical / Instrumental Biases",
+    # Computational / Analytical
+    "Computational/Analytical Bias": "Computational / Analytical Biases",
+    "Analytical / Software / Computational Bias": "Computational / Analytical Biases",
+    "Analytical / Software Biases": "Computational / Analytical Biases",
+    "Computational / Analytical Biases": "Computational / Analytical Biases",
+    # Reporting / Interpretation
+    "Bias in Interpretation / Post-Analysis": "Reporting / Interpretation Biases",
+    "Reporting / Interpretation / Post-Analysis Bias": "Reporting / Interpretation Biases",
+    "Reporting / Interpretation / Post-Analysis Biases": "Reporting / Interpretation Biases",
+    # Other
+    "Other Biases / Challenges": "Other Biases / Challenges",
+    "Other Biases / Challenges / Limitations": "Other Biases / Challenges",
+}
+
+SUBCATEGORY_ORDER = [
+    "Data Production Biases",
+    "Technical / Instrumental Biases",
+    "Computational / Analytical Biases",
+    "Reporting / Interpretation Biases",
+    "Other Biases / Challenges",
+]
+
+
+def normalize_subcategories(df):
+    """Normalize subcategory names to 5 canonical pipeline stages."""
+    df = df.copy()
+    df['Subcategory'] = df['Subcategory'].map(SUBCATEGORY_MAP).fillna(df['Subcategory'])
+    return df
+
+
 def load_data(data_path='data/bias.csv'):
     """Load and preprocess the bias data"""
     # Get the project root directory (2 levels up from scripts/figures/)
