@@ -2,7 +2,7 @@
 
 **Paper:** "Bias in Omics Data Beyond Non-Representativeness" by Salarikia et al.
 **Data Source:** 145 bias entries across 7 omics categories from systematic literature review (2019-2024)
-**Last Updated:** 2026-02-14
+**Last Updated:** 2026-02-16
 
 ---
 
@@ -98,7 +98,7 @@ figures/
 
 ![Figure 3 - Chinese Comparison](figures/main/png/fig3_chinese_comparison.png)
 
-*This two-panel visualization compares Chinese-language literature biases with other omics fields after keyword harmonization (see [Chinese Keyword Harmonization](#chinese-keyword-harmonization)). The left panel uses overlapping Venn-style circles: 18 of 20 original Chinese keywords had equivalents in other categories via the harmonization map, but since some map to the same target keyword, the final unique set is 18 Chinese keywords — of which 16 are shared with other fields and 2 are truly unique. They were previously reported as "100% unique" due to different phrasing by Chinese curators. The right panel displays the 2 truly unique Chinese biases that have no equivalent in other fields. This harmonized view reveals that Chinese-language literature largely corroborates biases found in English sources using independent terminology, while still contributing genuinely novel perspectives.*
+*This two-panel visualization compares Chinese-language literature biases with other omics fields after keyword harmonization (see [Chinese Keyword Harmonization](#chinese-keyword-harmonization)). The left panel uses overlapping Venn-style circles: 16 of 20 original Chinese keywords had equivalents in other categories via the harmonization map, but since some map to the same target keyword, the final unique set is 18 Chinese keywords — of which 14 are shared with other fields (78%) and 4 are truly unique (22%). They were previously reported as "100% unique" due to different phrasing by Chinese curators. The right panel displays the 4 truly unique Chinese biases confirmed by the Chinese Literature curator: Context-driven missingness bias (microbial culturing exclusion), Haplotype phasing & complex admixture errors (ancestral lineage masking), Taxonomic & naming conflicts (TCM compound deficit), and Ethical, Consent & Cultural Barriers (community mistrust). This harmonized view reveals that Chinese-language literature largely corroborates biases found in English sources using independent terminology, while contributing genuinely novel culture- and population-specific perspectives.*
 
 **Files:**
 - PNG: `figures/main/png/fig3_chinese_comparison.png`
@@ -253,30 +253,30 @@ Chinese Literature curators used different phrasing for bias concepts that alrea
 
 | # | Chinese Literature Keyword | Match? | Replace with (from other category) | Confirm |
 |---|---|---|---|---|
-| 1 | Participation–power limitation | YES | Sample size/underpowered (Genomics) | [ ] |
-| 2 | Handling-related variability bias | YES | Sample Handling, Quality & Degradation (Multi-omics) | [ ] |
-| 3 | Context-driven missingness bias | YES | Dropout Events / Sparsity (Transcriptomics) | [ ] |
-| 4 | Short-read sequencing limitations | YES | Sequencing Technology Limitations (Genomics) | [ ] |
-| 5 | Allelic dropout & coverage bias | YES | Detection/capture limitations... (Multi-omics) | [ ] |
-| 6 | Batch effects & platform variability | YES | Platform Variability & Batch Effects (General_omics) | [ ] |
-| 7 | Metabolomics technical limits | YES | Platform differences & Sensitivity, Specificity & Coverage Limitations (Metabolomics) | [ ] |
-| 8 | Database-driven coverage gaps | YES | Reference Database Gaps & Errors (General_omics) | [ ] |
-| 9 | Haplotype phasing & complex admixture errors | **UNIQUE** | — (population genetics-specific, no equivalent) | N/A |
-| 10 | Database dependence & annotation bias | YES | Database/Annotation Gaps & Standardization (Proteomics) | [ ] |
-| 11 | Subjectivity in analysis thresholds | YES | Lack of Standardization (Genomics) | [ ] |
-| 12 | Reproducibility & validation gaps | YES | Reproducibility, Validation & Cost (General_omics) | [ ] |
-| 13 | Taxonomic & naming conflicts | **UNIQUE** | — (taxonomy-specific classification, no equivalent) | N/A |
-| 14 | Clinical translation barriers | YES | Misaligned translation paradigm (Multi-omics) | [ ] |
-| 15 | Population Underrepresentation | YES | Ancestry/Population Bias (Genomics) | [ ] |
-| 16 | Small Sample Size & Recruitment Barriers | YES | Sample size/underpowered (Genomics) | [ ] |
-| 17 | Reference Genome & Database Bias | YES | Reference Database Gaps & Errors (General_omics) | [ ] |
-| 18 | Data Integration Challenges | YES | Data Integration & Pipeline Issues (Multi-omics) | [ ] |
-| 19 | Ethical, Consent & Cultural Barriers | YES | Ethics–data restriction bias (Multi-omics) | [ ] |
-| 20 | Resource Inequality & Economic Barriers | YES | High cost / resource barriers (Metabolomics) | [ ] |
+| 1 | Participation–power limitation | YES | Sample size/underpowered (Genomics) | [x] |
+| 2 | Handling-related variability bias | YES | Sample Handling, Quality & Degradation (Multi-omics) | [x] |
+| 3 | Context-driven missingness bias | **UNIQUE** | Systemic exclusion of ~80% of uncultured microbial life (culturing requirement) ≠ stochastic RNA dropout in Transcriptomics. Not the same concept. | [x] |
+| 4 | Short-read sequencing limitations | YES | Sequencing Technology Limitations (Genomics) | [x] |
+| 5 | Allelic dropout & coverage bias | YES | Detection/capture limitations... (Multi-omics) | [x] |
+| 6 | Batch effects & platform variability | YES | Platform Variability & Batch Effects (General_omics) | [x] |
+| 7 | Metabolomics technical limits | YES | Platform differences & Sensitivity, Specificity & Coverage Limitations (Metabolomics) | [x] |
+| 8 | Database-driven coverage gaps | YES | Reference Database Gaps & Errors (General_omics) | [x] |
+| 9 | Haplotype phasing & complex admixture errors (Ancestral Lineage Masking) | **UNIQUE** | Inability of standard pipelines to handle deep evolutionary histories unique to Asian high-altitude/isolated populations (e.g., EPAS1). Not general "Reference Bias." | [x] |
+| 10 | Database dependence & annotation bias | YES | Database/Annotation Gaps & Standardization (Proteomics) | [x] |
+| 11 | Subjectivity in analysis thresholds | YES | Lack of Standardization (Genomics) | [x] |
+| 12 | Reproducibility & validation gaps | YES | Reproducibility, Validation & Cost (General_omics) | [x] |
+| 13 | Taxonomic & naming conflicts (TCM-Specific Compound Deficit) | **UNIQUE** | Standard libraries (HMDB, METLIN) heavily weighted toward Western diets/synthetic drugs, creating systematic blind spot for Traditional Chinese Medicine compounds. | [x] |
+| 14 | Clinical translation barriers | YES | Misaligned translation paradigm (Multi-omics) | [x] |
+| 15 | Population Underrepresentation | YES | Ancestry/Population Bias (Genomics) | [x] |
+| 16 | Small Sample Size & Recruitment Barriers | YES | Sample size/underpowered (Genomics) | [x] |
+| 17 | Reference Genome & Database Bias | YES | Reference Database Gaps & Errors (General_omics) | [x] |
+| 18 | Data Integration Challenges | YES | Data Integration & Pipeline Issues (Multi-omics) | [x] |
+| 19 | Ethical, Consent & Cultural Barriers | **UNIQUE** | Sociological mistrust in Indigenous/rural communities requiring community engagement ≠ legal/technical GDPR/HIPAA data restriction hurdles. | [x] |
+| 20 | Resource Inequality & Economic Barriers | YES | High cost / resource barriers (Metabolomics) | [x] |
 
-**Result:** 18 matches, 2 truly unique (#9, #13). After harmonization, Figure 3 shows overlapping Venn circles instead of fully separated ones.
+**Result:** 16 matches, 4 truly unique (#3, #9, #13, #19). After harmonization, Figure 3 shows overlapping Venn circles instead of fully separated ones. All 20 rows confirmed by Yichun (2026-02-16).
 
-> **Reviewer action:** Check each `[ ]` box after confirming the mapping is semantically correct. The 2 `N/A` entries are truly unique Chinese biases with no equivalent in other categories.
+> **All confirmed.** Yichun verified all 16 YES mappings are semantically correct and provided expert explanations for the 4 UNIQUE entries, confirming they have no equivalent in other categories.
 
 ### Semantic Keyword Merging
 
@@ -361,10 +361,14 @@ All scripts located in: `scripts/figures/`
 ## Key Insights from Bias Analysis
 
 ### 1. Chinese Literature Corroborates and Extends Omics Bias Knowledge
-- **After keyword harmonization:** 18 of 20 Chinese biases describe the same concepts found in other categories — curators used independent phrasing (see [Chinese Keyword Harmonization](#chinese-keyword-harmonization))
-- **2 truly unique biases:** "Haplotype phasing & complex admixture errors" (population genetics-specific) and "Taxonomic & naming conflicts" (taxonomy-specific)
+- **After keyword harmonization:** 16 of 20 Chinese biases describe the same concepts found in other categories — curators used independent phrasing (see [Chinese Keyword Harmonization](#chinese-keyword-harmonization))
+- **4 truly unique biases** (confirmed by Chinese Literature curator, Yichun):
+  1. "Context-driven missingness bias" — systemic exclusion of uncultured microbial life, distinct from stochastic RNA dropout
+  2. "Haplotype phasing & complex admixture errors" (Ancestral Lineage Masking) — deep evolutionary histories in Asian high-altitude/isolated populations (e.g., EPAS1)
+  3. "Taxonomic & naming conflicts" (TCM-Specific Compound Deficit) — standard libraries (HMDB, METLIN) biased toward Western diets, blind spot for Traditional Chinese Medicine
+  4. "Ethical, Consent & Cultural Barriers" — sociological mistrust in Indigenous/rural communities, distinct from legal GDPR/HIPAA restrictions
 - **Top Chinese biases:** Population Underrepresentation (22 citations), Short-read limitations (21 citations)
-- **Critical implication:** Chinese-language literature independently validates English-source findings while contributing genuinely novel perspectives; multilingual systematic reviews remain essential to capture the full picture
+- **Critical implication:** Chinese-language literature independently validates English-source findings while contributing genuinely novel culture- and population-specific perspectives; multilingual systematic reviews remain essential to capture the full picture
 
 ### 2. Computational/Analytical Stage Dominates Research Attention
 - **Highest citation concentration:** 504 citations (24.7% of total 2,041 citations)
@@ -526,18 +530,18 @@ The following items were flagged during the audit. Please confirm or correct.
 
 | # | Item | Question | Status |
 |---|---|---|---|
-| Q1 | Chinese harmonization: rows 1 & 16 | Both "Participation–power limitation" and "Small Sample Size & Recruitment Barriers" map to "Sample size/underpowered". Confirm that these are indeed the same bias concept or whether they should remain distinct. | [ ] |
-| Q2 | Chinese harmonization: rows 8 & 17 | Both "Database-driven coverage gaps" and "Reference Genome & Database Bias" map to "Reference Database Gaps & Errors". Confirm these are the same concept. | [ ] |
+| Q1 | Chinese harmonization: rows 1 & 16 | Both "Participation–power limitation" and "Small Sample Size & Recruitment Barriers" map to "Sample size/underpowered". Confirm that these are indeed the same bias concept or whether they should remain distinct. | [x] Confirmed by Yichun |
+| Q2 | Chinese harmonization: rows 8 & 17 | Both "Database-driven coverage gaps" and "Reference Genome & Database Bias" map to "Reference Database Gaps & Errors". Confirm these are the same concept. | [x] Confirmed by Yichun |
 | Q3 | Semantic merge: Batch Effects cluster | After merging 3 variants, "Batch Effects & Instrument Differences" in Metabolomics jumps to 50 combined citations — making it the single highest-cited bias. Confirm the 3 source keywords ("Batch effects & Instrument Differences", "Platform Variability & Batch Effects", "Instrument Drift & Batch Effects") are truly the same concept and should be summed. | [ ] |
 | Q4 | Semantic merge: Standardization cluster | 7 variants are merged into "Lack of Standardization". The cluster is large and includes diverse qualifiers (benchmarks, interoperability, reproducibility, harmonization, validation). Confirm all 7 describe the same root concept, or whether some should be split. | [ ] |
 | Q5 | Semantic merge: Reproducibility cluster | "Reproducibility, Validation & Cost" is merged with "Reproducibility & Correlation/Causation". The former includes cost; the latter includes causation. Confirm these belong in the same cluster. | [ ] |
-| Q6 | Pipeline stage totals vs text | Previous versions of this document had incorrect pipeline stage totals (e.g., 479 for Computational/Analytical instead of the correct 504). These have been corrected in this version. Please verify the "By Pipeline Stage" table matches your expectations. | [ ] |
+| Q6 | Pipeline stage totals vs text | Previous versions of this document had incorrect pipeline stage totals (e.g., 479 for Computational/Analytical instead of the correct 504). These have been corrected in this version. Please verify the "By Pipeline Stage" table matches your expectations. | [x] Corrected |
 | Q7 | Fig 6 sunburst: subcategory text truncation | Some outer-ring subcategory labels are still truncated in the plotly sunburst (e.g., "Technical / Instrumental Bi..."). This is a plotly rendering limitation at the current figure size. Confirm whether this is acceptable or if the label strategy should change. | [ ] |
 | Q8 | "Data / Prediction Biases" subcategory | This curator-supplied name is mapped to "Data Production Biases" via SUBCATEGORY_MAP. Confirm this is the correct assignment — "Prediction" could arguably belong in "Computational/Analytical". | [ ] |
 | Q9 | Fig S2: Category exclusion rationale | Multi-omics, General_omics, and Chinese Literature are excluded from the violin plot because they aggregate biases across multiple fields. Confirm this exclusion is appropriate for the paper's narrative. | [ ] |
 
 ---
 
-**Last Updated:** 2026-02-14
+**Last Updated:** 2026-02-16
 **Status:** All 11 figures implemented and generated
 **Data Source:** bias.csv (145 curated biases, 2,041 citations)

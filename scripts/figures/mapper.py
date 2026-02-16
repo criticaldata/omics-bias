@@ -80,7 +80,9 @@ CHINESE_KEYWORD_MAP = {
     # Data Production
     "Participation–power limitation": "Sample size/underpowered",
     "Handling-related variability bias": "Sample Handling, Quality & Degradation",
-    "Context-driven missingness bias": "Dropout Events / Sparsity",
+    # "Context-driven missingness bias" → UNIQUE (systemic exclusion of 80% of
+    #   uncultured microbial life ≠ stochastic RNA dropout in Transcriptomics
+    #   — confirmed by Yichun, 2026-02-16)
     "Small Sample Size & Recruitment Barriers": "Sample size/underpowered",
     "Population Underrepresentation": "Ancestry/Population Bias",
     # Technical / Instrumental
@@ -99,13 +101,21 @@ CHINESE_KEYWORD_MAP = {
     "Subjectivity in analysis thresholds": "Lack of Standardization",
     "Reference Genome & Database Bias": "Reference Database Gaps & Errors",
     "Data Integration Challenges": "Data Integration & Pipeline Issues",
-    # "Haplotype phasing & complex admixture errors" → UNIQUE (population genetics-specific)
+    # "Haplotype phasing & complex admixture errors" → UNIQUE (Ancestral Lineage
+    #   Masking: inability of standard pipelines to handle deep evolutionary
+    #   histories unique to Asian high-altitude/isolated populations, e.g. EPAS1
+    #   — confirmed by Yichun, 2026-02-16)
     # Reporting / Interpretation
     "Clinical translation barriers": "Misaligned translation paradigm",
     # Other
     "Reproducibility & validation gaps": "Reproducibility, Validation & Cost",
-    # "Taxonomic & naming conflicts" → UNIQUE (taxonomy-specific classification)
-    "Ethical, Consent & Cultural Barriers": "Ethics–data restriction bias",
+    # "Taxonomic & naming conflicts" → UNIQUE (TCM-Specific Compound Deficit:
+    #   standard libraries HMDB/METLIN biased toward Western diets/synthetic drugs,
+    #   creating blind spot for Traditional Chinese Medicine
+    #   — confirmed by Yichun, 2026-02-16)
+    # "Ethical, Consent & Cultural Barriers" → UNIQUE (sociological mistrust in
+    #   Indigenous/rural communities ≠ legal/technical GDPR/HIPAA data restriction
+    #   — confirmed by Yichun, 2026-02-16)
     "Resource Inequality & Economic Barriers": "High cost / resource barriers",
 }
 
