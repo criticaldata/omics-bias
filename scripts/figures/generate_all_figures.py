@@ -19,6 +19,7 @@ figure_times = {}
 main_figures = [
     ('fig1_heatmap.py', 'Figure 1: Overview Heatmap'),
     ('fig1_1_lifecycle.py', 'Figure 1.1: Lifecycle Diagram'),
+    ('fig1_2_pipeline_bars.py', 'Figure 1.2: Pipeline Bars'),
     ('fig2_network.py', 'Figure 2: Network Graph'),
     ('fig3_chinese_comparison.py', 'Figure 3: Chinese Literature Comparison'),
     ('fig4_pipeline_sankey.py', 'Figure 4: Pipeline Sankey'),

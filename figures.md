@@ -2,7 +2,7 @@
 
 **Paper:** "Bias in Omics Data Beyond Non-Representativeness" by Salarikia et al.
 **Data Source:** 145 bias entries across 7 omics categories from systematic literature review (2019-2024)
-**Last Updated:** 2026-02-16
+**Last Updated:** <mark>2026-02-20</mark>
 
 ---
 
@@ -11,12 +11,13 @@
 ### Main Figures
 1. [Figure 1: Overview Heatmap](#figure-1-overview-heatmap---bias-landscape-across-omics-categories)
 2. [Figure 1.1: Lifecycle Diagram](#figure-11-omics-research-pipeline---lifecycle-bias-distribution)
-3. [Figure 2: Network Graph](#figure-2-network-graph---cross-omics-bias-relationships)
-4. [Figure 3: Chinese Literature Comparison](#figure-3-chinese-literature-comparison---unique-bias-contributions)
-5. [Figure 4: Pipeline Sankey](#figure-4-enhanced-pipeline-sankey---bias-flow-through-research-stages)
-6. [Figure 5: Stacked Bar Chart](#figure-5-stacked-bar-chart---bias-distribution-by-omics-category)
-7. [Figure 6: Curated Hierarchy (Sunburst)](#figure-6-curated-bias-hierarchy---sunburst-visualization)
-8. [Figure 7: Cross-Omics Heatmap](#figure-7-cross-omics-heatmap---bias-distribution-across-categories)
+3. [Figure 1.2: Pipeline Bars](#figure-12-omics-research-pipeline---top-biases-by-stage-bar-chart)
+4. [Figure 2: Network Graph](#figure-2-network-graph---cross-omics-bias-relationships)
+5. [Figure 3: Chinese Literature Comparison](#figure-3-chinese-literature-comparison---unique-bias-contributions)
+6. [Figure 4: Pipeline Sankey](#figure-4-enhanced-pipeline-sankey---bias-flow-through-research-stages)
+7. [Figure 5: Stacked Bar Chart](#figure-5-stacked-bar-chart---bias-distribution-by-omics-category)
+8. [Figure 6: Curated Hierarchy (Sunburst)](#figure-6-curated-bias-hierarchy---sunburst-visualization)
+9. [Figure 7: Cross-Omics Heatmap](#figure-7-cross-omics-heatmap---bias-distribution-across-categories)
 
 ### Supplementary Figures
 - [Figure S1: Bubble Chart](#supplementary-figure-s1-top-biases-bubble-chart)
@@ -75,6 +76,20 @@ figures/
 **Files:**
 - PNG: `figures/main/png/fig1_1_lifecycle.png`
 - PDF: `figures/main/pdf/fig1_1_lifecycle.pdf`
+
+---
+
+### Figure 1.2: Omics Research Pipeline - Top Biases by Stage (Bar Chart)
+
+**Type:** Horizontal grouped bar chart
+
+![Figure 1.2 - Pipeline Bars](figures/main/png/fig1_2_pipeline_bars.png)
+
+*This bar chart maps bias distribution across the five canonical pipeline stages: (1) Data Production, (2) Technical/Instrumental, (3) Computational/Analytical, (4) Reporting/Interpretation, and (5) Other Challenges. For each stage, the three most-cited individual biases are displayed, with bar length proportional to citation count. Biases are pooled across all seven omics categories. For example: "Batch effects & instrument differences" (31 citations) originates primarily from metabolomics, while "Dropout events/sparsity" (22 citations) derives predominantly from transcriptomics. Subcategory names are normalized from 18 curator variants to these 5 canonical stages (see [Subcategory Normalization](#subcategory-normalization)). Computational/Analytical shows the highest citation concentration (504 citations), followed by Data Production (479 citations) and Technical/Instrumental (471 citations). Reporting/Interpretation contains the fewest reported biases (176 citations), suggesting that downstream transparency challenges may be underrepresented in the current literature.*
+
+**Files:**
+- PNG: `figures/main/png/fig1_2_pipeline_bars.png`
+- PDF: `figures/main/pdf/fig1_2_pipeline_bars.pdf`
 
 ---
 
@@ -212,22 +227,23 @@ figures/
 
 ### Implemented Figures ✅
 
-**Main Figures (8):**
+**Main Figures (<mark>9</mark>):**
 1. Figure 1: Overview Heatmap
 2. Figure 1.1: Lifecycle Diagram
-3. Figure 2: Network Graph
-4. Figure 3: Chinese Literature Comparison
-5. Figure 4: Pipeline Sankey
-6. Figure 5: Stacked Bar Chart
-7. Figure 6: Curated Bias Hierarchy (Sunburst)
-8. Figure 7: Cross-Omics Heatmap
+3. <mark>Figure 1.2: Pipeline Bars (NEW — horizontal grouped bar chart of top 3 biases per pipeline stage)</mark>
+4. Figure 2: Network Graph
+5. Figure 3: Chinese Literature Comparison
+6. Figure 4: Pipeline Sankey
+7. Figure 5: Stacked Bar Chart
+8. Figure 6: Curated Bias Hierarchy (Sunburst)
+9. Figure 7: Cross-Omics Heatmap
 
 **Supplementary Figures (3):**
 - S1: Bubble Chart
 - S2: Violin Plot
 - S4: Category Profiles
 
-**Total: 11 figures**
+**Total: <mark>12</mark> figures**
 
 ---
 
@@ -264,7 +280,7 @@ Chinese Literature curators used different phrasing for bias concepts that alrea
 | 9 | Haplotype phasing & complex admixture errors (Ancestral Lineage Masking) | **UNIQUE** | Inability of standard pipelines to handle deep evolutionary histories unique to Asian high-altitude/isolated populations (e.g., EPAS1). Not general "Reference Bias." | [x] |
 | 10 | Database dependence & annotation bias | YES | Database/Annotation Gaps & Standardization (Proteomics) | [x] |
 | 11 | Subjectivity in analysis thresholds | YES | Lack of Standardization (Genomics) | [x] |
-| 12 | Reproducibility & validation gaps | YES | Reproducibility, Validation & Cost (General_omics) | [x] |
+| 12 | Reproducibility & validation gaps | YES | <mark>Reproducibility, Validation & Cost (General_omics) — note: this target now routes to Cost cluster via KEYWORD_MERGE_MAP</mark> | [x] |
 | 13 | Taxonomic & naming conflicts (TCM-Specific Compound Deficit) | **UNIQUE** | Standard libraries (HMDB, METLIN) heavily weighted toward Western diets/synthetic drugs, creating systematic blind spot for Traditional Chinese Medicine compounds. | [x] |
 | 14 | Clinical translation barriers | YES | Misaligned translation paradigm (Multi-omics) | [x] |
 | 15 | Population Underrepresentation | YES | Ancestry/Population Bias (Genomics) | [x] |
@@ -286,14 +302,14 @@ Multiple curators independently named the same bias concept using different phra
 |---|---|---|
 | Batch Effects & Instrument Differences | "Batch effects & Instrument Differences", "Platform Variability & Batch Effects", "Instrument Drift & Batch Effects" | 3 |
 | Sample Heterogeneity | "Sample & Cohort Heterogeneity", "Sample Heterogeneity & Variability", "Sample Selection Bias & Heterogeneity" | 3 |
-| Lack of Standardization | "Lack of Standardization", "…& Benchmarks", "…& Interoperability", "…& Reproducibility", "…/Harmonization", "…/Validation", "Lack of standarization" (typo) | 7 |
+| Lack of Standardization | <mark>"Lack of Standardization", "…& Benchmarks", "…& Interoperability", "…& Reproducibility", "…/Harmonization", "…/Validation", "Lack of standarization" (typo) — Q4 pending JY review: "…& Reproducibility" and "…/Validation" may move to Reproducibility cluster</mark> | 7 |
 | Reference Database Gaps | "Reference Database Gaps & Errors", "Reference Genome & Database Bias", "Biased/Incomplete Reference Data" | 3 |
-| High Cost / Resource Barriers | "High Cost/Resource Barriers", "High cost / resource barriers", "High cost, input requirements, and scalability limits", "Cost, scalability & infrastructure burden…" | 4 |
-| Reproducibility & Validation | "Reproducibility & Correlation/Causation", "Reproducibility & validation gaps", "Reproducibility, Validation & Cost" | 3 |
+| High Cost / Resource Barriers | "High Cost/Resource Barriers", "High cost / resource barriers", "High cost, input requirements, and scalability limits", "Cost, scalability & infrastructure burden…", <mark>"Reproducibility, Validation & Cost" (moved from Reproducibility cluster — cost is the dominant signal per Osama)</mark> | <mark>5</mark> |
+| Reproducibility & Validation | "Reproducibility & Correlation/Causation", "Reproducibility & validation gaps" <mark>(Q5 resolved: "Reproducibility, Validation & Cost" removed → moved to Cost cluster)</mark> | <mark>2</mark> |
 | Algorithmic / Model Bias | "Algorithm & Model Bias (especially AI/ML)", "Algorithmic/Model Bias" | 2 |
 | Amplification / PCR Bias | "Amplification & PCR bias (GC-content, primer bias, copy number skew)", "Amplification Bias" | 2 |
 
-**Total:** ~27 keyword variants merged into 8 canonical names. Applied to all figures.
+**Total:** ~27 keyword variants merged into 8 canonical names. Applied to all figures. <mark>Q5 change (2026-02-20): "Reproducibility, Validation & Cost" moved from Reproducibility cluster to Cost cluster per team consensus.</mark>
 
 ### File Naming Convention
 - Main figures: `fig{N}_{description}.png/pdf`
@@ -343,6 +359,7 @@ All scripts located in: `scripts/figures/`
 - `mapper.py` - Centralized mappings, data loading, colors, and save functions
 - `fig1_heatmap.py` - Overview heatmap
 - `fig1_1_lifecycle.py` - Circular lifecycle diagram
+- <mark>`fig1_2_pipeline_bars.py` - Pipeline bars (top 3 biases per stage, horizontal bar chart)</mark>
 - `fig2_network.py` - Network graph
 - `fig3_chinese_comparison.py` - Chinese literature comparison
 - `fig4_pipeline_sankey.py` - Pipeline Sankey
@@ -354,7 +371,7 @@ All scripts located in: `scripts/figures/`
 - `figS4_category_profiles.py` - Category profiles
 
 **Master Script:**
-- `generate_all_figures.py` - Regenerates all 11 figures
+- `generate_all_figures.py` - Regenerates all <mark>12</mark> figures
 
 ---
 
@@ -533,15 +550,22 @@ The following items were flagged during the audit. Please confirm or correct.
 | Q1 | Chinese harmonization: rows 1 & 16 | Both "Participation–power limitation" and "Small Sample Size & Recruitment Barriers" map to "Sample size/underpowered". Confirm that these are indeed the same bias concept or whether they should remain distinct. | [x] Confirmed by Yichun |
 | Q2 | Chinese harmonization: rows 8 & 17 | Both "Database-driven coverage gaps" and "Reference Genome & Database Bias" map to "Reference Database Gaps & Errors". Confirm these are the same concept. | [x] Confirmed by Yichun |
 | Q3 | Semantic merge: Batch Effects cluster | After merging 3 variants, "Batch Effects & Instrument Differences" in Metabolomics jumps to 50 combined citations — making it the single highest-cited bias. Confirm the 3 source keywords ("Batch effects & Instrument Differences", "Platform Variability & Batch Effects", "Instrument Drift & Batch Effects") are truly the same concept and should be summed. | [ ] |
-| Q4 | Semantic merge: Standardization cluster | 7 variants are merged into "Lack of Standardization". The cluster is large and includes diverse qualifiers (benchmarks, interoperability, reproducibility, harmonization, validation). Confirm all 7 describe the same root concept, or whether some should be split. | [ ] |
-| Q5 | Semantic merge: Reproducibility cluster | "Reproducibility, Validation & Cost" is merged with "Reproducibility & Correlation/Causation". The former includes cost; the latter includes causation. Confirm these belong in the same cluster. | [ ] |
+| Q4 | Semantic merge: Standardization cluster | 7 variants are merged into "Lack of Standardization". The cluster is large and includes diverse qualifiers (benchmarks, interoperability, reproducibility, harmonization, validation). Confirm all 7 describe the same root concept, or whether some should be split. | [ ] Pending — JY rechecking distribution from the data |
+| Q5 | Semantic merge: Reproducibility cluster | "Reproducibility, Validation & Cost" was merged with "Reproducibility & Correlation/Causation". Cost component has been moved to the Cost/Resource cluster per team consensus. Reproducibility cluster now contains only 2 entries. | [x] Resolved |
 | Q6 | Pipeline stage totals vs text | Previous versions of this document had incorrect pipeline stage totals (e.g., 479 for Computational/Analytical instead of the correct 504). These have been corrected in this version. Please verify the "By Pipeline Stage" table matches your expectations. | [x] Corrected |
 | Q7 | Fig 6 sunburst: subcategory text truncation | Some outer-ring subcategory labels are still truncated in the plotly sunburst (e.g., "Technical / Instrumental Bi..."). This is a plotly rendering limitation at the current figure size. Confirm whether this is acceptable or if the label strategy should change. | [ ] |
 | Q8 | "Data / Prediction Biases" subcategory | This curator-supplied name is mapped to "Data Production Biases" via SUBCATEGORY_MAP. Confirm this is the correct assignment — "Prediction" could arguably belong in "Computational/Analytical". | [ ] |
 | Q9 | Fig S2: Category exclusion rationale | Multi-omics, General_omics, and Chinese Literature are excluded from the violin plot because they aggregate biases across multiple fields. Confirm this exclusion is appropriate for the paper's narrative. | [ ] |
+| Q10 | Unmerged reproducibility/validation keywords | The following Final_Keywords contain "reproducibility" or "validation" but are NOT in any merge cluster. Review whether any should join the Reproducibility & Validation cluster: (1) "lack of transparency in methods & Reproducibility" (row 21, Metabolomics, Reporting), (2) "Lack of Validation & Replication" (row 47, Multi-omics, Reporting), (3) "Validation–infrastructure mismatch" (row 58, General_omics, Other), (4) "Need for Experimental Validation" (row 85, Proteomics, Other), (5) "Lack of Benchmarks/Validation" (row 109, Transcriptomics, Other), (6) "Reproducibility & Over-interpretation" (row 144, Proteomics, Reporting). | [ ] For Marianna/team review |
 
 ---
 
-**Last Updated:** 2026-02-16
-**Status:** All 11 figures implemented and generated
+**Last Updated:** <mark>2026-02-20</mark>
+**Status:** All <mark>12</mark> figures implemented and generated
 **Data Source:** bias.csv (145 curated biases, 2,041 citations)
+
+### <mark>Changelog (2026-02-20)</mark>
+<mark>1. **Q5 resolved:** "Reproducibility, Validation & Cost" moved from Reproducibility cluster → Cost/Resource cluster in `KEYWORD_MERGE_MAP` (mapper.py). Reproducibility cluster now has 2 entries; Cost cluster has 5.</mark>
+<mark>2. **Figure 1.2 added:** New horizontal grouped bar chart (`fig1_2_pipeline_bars.py`) showing top 3 biases per pipeline stage. Total figures: 12 (9 main + 3 supplementary).</mark>
+<mark>3. **Q4 pending:** JY rechecking Standardization cluster distribution — "& Reproducibility" and "/Validation" may move to Reproducibility cluster.</mark>
+<mark>4. **Q10 added:** 6 unmerged reproducibility/validation keywords flagged for Marianna/team review.</mark>

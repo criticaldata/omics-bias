@@ -233,15 +233,15 @@ KEYWORD_MERGE_MAP = {
     "Reference Database Gaps & Errors": "Reference Database Gaps",
     "Reference Genome & Database Bias": "Reference Database Gaps",
     "Biased/Incomplete Reference Data": "Reference Database Gaps",
-    # 5. Cost/resource cluster
+    # 5. Cost/resource cluster (includes former reproducibility-cost overlap)
     "High Cost/Resource Barriers": "High Cost / Resource Barriers",
     "High cost / resource barriers": "High Cost / Resource Barriers",
     "High cost, input requirements, and scalability limits": "High Cost / Resource Barriers",
     "Cost, scalability & infrastructure burden (high-throughput expense, specialized equipment)": "High Cost / Resource Barriers",
-    # 6. Reproducibility cluster
+    "Reproducibility, Validation & Cost": "High Cost / Resource Barriers",
+    # 6. Reproducibility & validation cluster (cost removed per Osama)
     "Reproducibility & Correlation/Causation": "Reproducibility & Validation",
     "Reproducibility & validation gaps": "Reproducibility & Validation",
-    "Reproducibility, Validation & Cost": "Reproducibility & Validation",
     # 7. Algorithmic/model bias cluster
     "Algorithm & Model Bias (especially AI/ML)": "Algorithmic / Model Bias",
     "Algorithmic/Model Bias": "Algorithmic / Model Bias",
