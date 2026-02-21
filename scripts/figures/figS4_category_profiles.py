@@ -85,4 +85,3 @@ def create_category_profiles():
 
 if __name__ == '__main__':
     create_category_profiles()
-    plt.show()

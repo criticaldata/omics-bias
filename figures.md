@@ -2,7 +2,7 @@
 
 **Paper:** "Bias in Omics Data Beyond Non-Representativeness" by Salarikia et al.
 **Data Source:** 145 bias entries across 7 omics categories from systematic literature review (2019-2024)
-**Last Updated:** <mark>2026-02-20</mark>
+**Last Updated:** <mark>2026-02-21</mark>
 
 ---
 
@@ -22,6 +22,7 @@
 ### Supplementary Figures
 - [Figure S1: Bubble Chart](#supplementary-figure-s1-top-biases-bubble-chart)
 - [Figure S2: Violin/Box Plots](#supplementary-figure-s2-distribution-violinbox-plots)
+- <mark>[Figure S3: Aggregated Category Violins](#supplementary-figure-s3-aggregated-category-violinbox-plots-new)</mark>
 - [Figure S4: Category Profiles](#supplementary-figure-s4-category-specific-bias-profiles)
 
 ### Tables & Technical Details
@@ -209,6 +210,20 @@ figures/
 
 ---
 
+### <mark>Supplementary Figure S3: Aggregated Category Violin/Box Plots (NEW)</mark>
+
+<mark>**Type:** Violin + box plot overlay with swarm plot and pairwise significance bars</mark>
+
+<mark>![Supplementary Figure S3 - Aggregated Violins](figures/supplementary/png/figS3_aggregated_violins.png)</mark>
+
+<mark>*This dual-panel statistical visualization complements Figure S2 by analyzing the three aggregated categories excluded from S2: Multi-omics, General_omics, and Chinese Literature. These categories were excluded from S2 because they aggregate biases across multiple fields. The left panel combines violin plots with overlaid box plots and pairwise Mann-Whitney U significance bars (Bonferroni-corrected, 3 comparisons). The right panel adds individual swarm points. The Kruskal-Wallis test shows significant overall differences (H=15.42, p<0.001). General_omics has the highest mean (19.20) and differs significantly from both Multi-omics (p=0.004, \*\*) and Chinese Literature (p=0.002, \*\*), while Multi-omics and Chinese Literature do not differ significantly (p=0.84, ns). This confirms that General_omics represents well-established, broadly recognized concerns receiving higher citation attention.*</mark>
+
+<mark>**Files:**</mark>
+<mark>- PNG: `figures/supplementary/png/figS3_aggregated_violins.png`</mark>
+<mark>- PDF: `figures/supplementary/pdf/figS3_aggregated_violins.pdf`</mark>
+
+---
+
 ### Supplementary Figure S4: Category-Specific Bias Profiles
 
 **Type:** Small multiple bar charts
@@ -238,12 +253,13 @@ figures/
 8. Figure 6: Curated Bias Hierarchy (Sunburst)
 9. Figure 7: Cross-Omics Heatmap
 
-**Supplementary Figures (3):**
+**Supplementary Figures (<mark>4</mark>):**
 - S1: Bubble Chart
-- S2: Violin Plot
+- S2: Violin Plot (4 omics-specific categories)
+- <mark>S3: Aggregated Category Violins (NEW — Multi-omics, General_omics, Chinese Literature)</mark>
 - S4: Category Profiles
 
-**Total: <mark>12</mark> figures**
+**Total: <mark>13</mark> figures**
 
 ---
 
@@ -367,11 +383,12 @@ All scripts located in: `scripts/figures/`
 - `fig6_curated_hierarchy.py` - Sunburst hierarchy
 - `fig7_cross_omics_heatmap.py` - Cross-omics heatmap
 - `figS1_bubble_chart.py` - Bubble chart
-- `figS2_violin_plot.py` - Violin plots
+- `figS2_violin_plot.py` - Violin plots (omics-specific categories)
+- <mark>`figS3_aggregated_violins.py` - Aggregated category violins (Multi-omics, General_omics, Chinese Literature)</mark>
 - `figS4_category_profiles.py` - Category profiles
 
 **Master Script:**
-- `generate_all_figures.py` - Regenerates all <mark>12</mark> figures
+- `generate_all_figures.py` - Regenerates all <mark>13</mark> figures
 
 ---
 
@@ -549,23 +566,29 @@ The following items were flagged during the audit. Please confirm or correct.
 |---|---|---|---|
 | Q1 | Chinese harmonization: rows 1 & 16 | Both "Participation–power limitation" and "Small Sample Size & Recruitment Barriers" map to "Sample size/underpowered". Confirm that these are indeed the same bias concept or whether they should remain distinct. | [x] Confirmed by Yichun |
 | Q2 | Chinese harmonization: rows 8 & 17 | Both "Database-driven coverage gaps" and "Reference Genome & Database Bias" map to "Reference Database Gaps & Errors". Confirm these are the same concept. | [x] Confirmed by Yichun |
-| Q3 | Semantic merge: Batch Effects cluster | After merging 3 variants, "Batch Effects & Instrument Differences" in Metabolomics jumps to 50 combined citations — making it the single highest-cited bias. Confirm the 3 source keywords ("Batch effects & Instrument Differences", "Platform Variability & Batch Effects", "Instrument Drift & Batch Effects") are truly the same concept and should be summed. | [ ] |
+| Q3 | Semantic merge: Batch Effects cluster | After merging 3 variants, "Batch Effects & Instrument Differences" in Metabolomics jumps to 50 combined citations — making it the single highest-cited bias. Confirm the 3 source keywords ("Batch effects & Instrument Differences", "Platform Variability & Batch Effects", "Instrument Drift & Batch Effects") are truly the same concept and should be summed. | <mark>[x] Confirmed — team verified the 3 variants belong to the same concept</mark> |
 | Q4 | Semantic merge: Standardization cluster | 7 variants are merged into "Lack of Standardization". The cluster is large and includes diverse qualifiers (benchmarks, interoperability, reproducibility, harmonization, validation). Confirm all 7 describe the same root concept, or whether some should be split. | [ ] Pending — JY rechecking distribution from the data |
 | Q5 | Semantic merge: Reproducibility cluster | "Reproducibility, Validation & Cost" was merged with "Reproducibility & Correlation/Causation". Cost component has been moved to the Cost/Resource cluster per team consensus. Reproducibility cluster now contains only 2 entries. | [x] Resolved |
 | Q6 | Pipeline stage totals vs text | Previous versions of this document had incorrect pipeline stage totals (e.g., 479 for Computational/Analytical instead of the correct 504). These have been corrected in this version. Please verify the "By Pipeline Stage" table matches your expectations. | [x] Corrected |
-| Q7 | Fig 6 sunburst: subcategory text truncation | Some outer-ring subcategory labels are still truncated in the plotly sunburst (e.g., "Technical / Instrumental Bi..."). This is a plotly rendering limitation at the current figure size. Confirm whether this is acceptable or if the label strategy should change. | [ ] |
-| Q8 | "Data / Prediction Biases" subcategory | This curator-supplied name is mapped to "Data Production Biases" via SUBCATEGORY_MAP. Confirm this is the correct assignment — "Prediction" could arguably belong in "Computational/Analytical". | [ ] |
-| Q9 | Fig S2: Category exclusion rationale | Multi-omics, General_omics, and Chinese Literature are excluded from the violin plot because they aggregate biases across multiple fields. Confirm this exclusion is appropriate for the paper's narrative. | [ ] |
+| Q7 | Fig 6 sunburst: subcategory text truncation | Some outer-ring subcategory labels are still truncated in the plotly sunburst (e.g., "Technical / Instrumental Bi..."). This is a plotly rendering limitation at the current figure size. Confirm whether this is acceptable or if the label strategy should change. | <mark>[ ] Team suggestions: (a) manual labeling post-export in Adobe/PowerPoint, or (b) use abbreviations in figure caption/legend, e.g. TIB = Technical / Instrumental Biases, DPB = Data Production Biases, CAB = Computational / Analytical Biases, RIB = Reporting / Interpretation Biases, OBC = Other Biases / Challenges</mark> |
+| Q8 | "Data / Prediction Biases" subcategory | This curator-supplied name is mapped to "Data Production Biases" via SUBCATEGORY_MAP. Confirm this is the correct assignment — "Prediction" could arguably belong in "Computational/Analytical". | <mark>[ ] Team suggestion: "It belongs to both." Implementation TBD — current SUBCATEGORY_MAP allows only 1:1 mapping. Options: (a) split Transcriptomics "Data / Prediction Biases" rows so some go to each stage, (b) duplicate rows with proportional citation counts, or (c) keep current mapping and note the dual nature in the paper text.</mark> |
+| Q9 | Fig S2: Category exclusion rationale | Multi-omics, General_omics, and Chinese Literature are excluded from the violin plot because they aggregate biases across multiple fields. Confirm this exclusion is appropriate for the paper's narrative. | <mark>[ ] Proposal: keep current S2 (4 omics-specific categories) and add new Figure S3 with separate violin plots for Multi-omics, General_omics, and Chinese Literature. This preserves S2's statistical rigor while giving excluded categories their own visualization.</mark> |
 | Q10 | Unmerged reproducibility/validation keywords | The following Final_Keywords contain "reproducibility" or "validation" but are NOT in any merge cluster. Review whether any should join the Reproducibility & Validation cluster: (1) "lack of transparency in methods & Reproducibility" (row 21, Metabolomics, Reporting), (2) "Lack of Validation & Replication" (row 47, Multi-omics, Reporting), (3) "Validation–infrastructure mismatch" (row 58, General_omics, Other), (4) "Need for Experimental Validation" (row 85, Proteomics, Other), (5) "Lack of Benchmarks/Validation" (row 109, Transcriptomics, Other), (6) "Reproducibility & Over-interpretation" (row 144, Proteomics, Reporting). | [ ] For Marianna/team review |
 
 ---
 
-**Last Updated:** <mark>2026-02-20</mark>
-**Status:** All <mark>12</mark> figures implemented and generated
+**Last Updated:** <mark>2026-02-21</mark>
+**Status:** All <mark>13</mark> figures implemented and generated
 **Data Source:** bias.csv (145 curated biases, 2,041 citations)
 
-### <mark>Changelog (2026-02-20)</mark>
+### <mark>Changelog (2026-02-21)</mark>
 <mark>1. **Q5 resolved:** "Reproducibility, Validation & Cost" moved from Reproducibility cluster → Cost/Resource cluster in `KEYWORD_MERGE_MAP` (mapper.py). Reproducibility cluster now has 2 entries; Cost cluster has 5.</mark>
-<mark>2. **Figure 1.2 added:** New horizontal grouped bar chart (`fig1_2_pipeline_bars.py`) showing top 3 biases per pipeline stage. Total figures: 12 (9 main + 3 supplementary).</mark>
-<mark>3. **Q4 pending:** JY rechecking Standardization cluster distribution — "& Reproducibility" and "/Validation" may move to Reproducibility cluster.</mark>
-<mark>4. **Q10 added:** 6 unmerged reproducibility/validation keywords flagged for Marianna/team review.</mark>
+<mark>2. **Figure 1.2 added:** New horizontal grouped bar chart (`fig1_2_pipeline_bars.py`) showing top 3 biases per pipeline stage.</mark>
+<mark>3. **Q3 confirmed:** Team verified the 3 Batch Effects variants belong to the same concept.</mark>
+<mark>4. **Q4 pending:** JY rechecking Standardization cluster distribution — "& Reproducibility" and "/Validation" may move to Reproducibility cluster.</mark>
+<mark>5. **Q7 suggestions:** Team proposed (a) manual post-export labeling in Adobe/PowerPoint, or (b) abbreviations in caption (e.g., TIB = Technical / Instrumental Biases).</mark>
+<mark>6. **Q8 suggestion:** Team says "Data / Prediction Biases" belongs to both Data Production and Computational/Analytical. Implementation approach TBD.</mark>
+<mark>7. **Q9/S2 expansion:** Proposal accepted to keep S2 as-is and add new Figure S3 for excluded aggregated categories.</mark>
+<mark>8. **Figure S3 added:** New violin/box plots (`figS3_aggregated_violins.py`) for Multi-omics, General_omics, and Chinese Literature. Kruskal-Wallis significant (p<0.001). General_omics significantly higher than both others.</mark>
+<mark>9. **Q10 added:** 6 unmerged reproducibility/validation keywords flagged for Marianna/team review.</mark>
+<mark>10. **Total figures:** 13 (9 main + 4 supplementary).</mark>

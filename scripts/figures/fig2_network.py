@@ -199,4 +199,3 @@ def create_network_graph():
 
 if __name__ == '__main__':
     create_network_graph()
-    plt.show()

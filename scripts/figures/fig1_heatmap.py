@@ -87,4 +87,3 @@ def create_heatmap():
 
 if __name__ == '__main__':
     create_heatmap()
-    plt.show()

@@ -31,6 +31,7 @@ main_figures = [
 supplementary_figures = [
     ('figS1_bubble_chart.py', 'Supplementary Figure S1: Bubble Chart'),
     ('figS2_violin_plot.py', 'Supplementary Figure S2: Violin Plot'),
+    ('figS3_aggregated_violins.py', 'Supplementary Figure S3: Aggregated Category Violins'),
     ('figS4_category_profiles.py', 'Supplementary Figure S4: Category Profiles'),
 ]
 

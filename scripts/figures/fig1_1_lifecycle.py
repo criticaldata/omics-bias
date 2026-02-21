@@ -144,4 +144,3 @@ def create_lifecycle_diagram():
 
 if __name__ == '__main__':
     create_lifecycle_diagram()
-    plt.show()

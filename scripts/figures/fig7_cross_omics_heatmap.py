@@ -85,4 +85,3 @@ def create_cross_omics_heatmap():
 
 if __name__ == '__main__':
     create_cross_omics_heatmap()
-    plt.show()

@@ -146,4 +146,3 @@ def create_chinese_comparison():
 
 if __name__ == '__main__':
     create_chinese_comparison()
-    plt.show()

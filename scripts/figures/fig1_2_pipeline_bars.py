@@ -146,4 +146,3 @@ def create_pipeline_bars():
 
 if __name__ == '__main__':
     create_pipeline_bars()
-    plt.show()

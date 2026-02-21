@@ -140,4 +140,3 @@ def create_stacked_bar():
 
 if __name__ == '__main__':
     create_stacked_bar()
-    plt.show()
