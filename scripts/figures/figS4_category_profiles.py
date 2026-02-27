@@ -9,6 +9,16 @@ from mapper import load_data, get_category_color, save_figure, shorten_bias, mer
 
 def create_category_profiles():
     """Create small multiple bar charts for each category"""
+    
+    # Configure Matplotlib for publication standards (matches Figure 1.1)
+    plt.rcParams.update({
+        'font.family': 'sans-serif',
+        'font.sans-serif': ['Arial', 'Helvetica', 'DejaVu Sans'],
+        'pdf.fonttype': 42,
+        'ps.fonttype': 42,
+        'svg.fonttype': 'none'
+    })
+
     # Set random seed
     np.random.seed(42)
 
@@ -16,12 +26,13 @@ def create_category_profiles():
     df = load_data()
     df = merge_semantic_keywords(df)
 
-    # Get categories
+    # Get categories and filter out 'Chinese Literature'
     categories = sorted(df['Category'].unique())
+    categories = [cat for cat in categories if cat != 'Chinese Literature']
     n_categories = len(categories)
 
-    # Create figure with subplots
-    fig, axes = plt.subplots(3, 3, figsize=(20, 16))
+    # Create figure with subplots (Changed to 2x3 since we now have exactly 6 categories)
+    fig, axes = plt.subplots(2, 3, figsize=(20, 12))
     axes = axes.flatten()
 
     # Plot each category
@@ -45,31 +56,38 @@ def create_category_profiles():
         # Add value labels
         for i, (bar, count) in enumerate(zip(bars, counts)):
             ax.text(count + 0.5, i, f'{int(count)}',
-                   va='center', fontsize=9, fontweight='bold')
+                   va='center', fontsize=10, fontweight='bold')
+
+        # Add Panel Letter (A, B, C, D, E, F) to the top left of each subplot
+        panel_letter = chr(65 + idx)
+        ax.text(-0.35, 1.1, panel_letter, transform=ax.transAxes, 
+                fontsize=22, fontweight='bold', va='top', ha='right', color='black')
 
         # Styling
         ax.set_yticks(range(len(labels)))
-        ax.set_yticklabels(labels, fontsize=9)
-        ax.set_xlabel('Citations', fontsize=10, fontweight='bold')
+        ax.set_yticklabels(labels, fontsize=11)
+        ax.set_xlabel('Citations', fontsize=12, fontweight='bold')
         ax.set_title(f'{cat}\n({len(cat_df)} biases, {int(cat_df["Final count"].sum())} citations)',
-                    fontsize=12, fontweight='bold', color=color, pad=10)
+                    fontsize=14, fontweight='bold', color=color, pad=15)
         ax.grid(axis='x', alpha=0.3, linestyle='--')
-        ax.set_xlim(0, max(counts) * 1.15)
+        ax.set_xlim(0, max(counts) * 1.2) # Extended slightly to fit labels better
 
         # Invert y-axis so top bias is at top
         ax.invert_yaxis()
 
-    # Hide unused subplots
+    # Hide any unused subplots (though there shouldn't be any with a 2x3 grid and 6 categories)
     for idx in range(n_categories, len(axes)):
         axes[idx].axis('off')
 
     # Overall title
     fig.suptitle('Category-Specific Bias Profiles - Top 10 Biases per Omics Field',
-                fontsize=18, fontweight='bold', y=0.995)
+                fontsize=20, fontweight='bold', y=1.02)
 
-    plt.tight_layout(rect=[0, 0, 1, 0.99])
+    # Adjusted layout to make room for panel letters and titles
+    plt.tight_layout(rect=[0, 0, 1, 0.98], w_pad=3.0, h_pad=2.0)
 
-    # Save figure
+    # Save figure as both PNG and PDF for journal submission
+    save_figure(fig, 'figS4_category_profiles.pdf', output_dir='figures/supplementary')
     save_figure(fig, 'figS4_category_profiles.png', output_dir='figures/supplementary')
 
     # Print summary
