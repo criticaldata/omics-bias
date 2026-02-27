@@ -30,7 +30,7 @@ def create_heatmap():
 
     # Reorder columns to match category order
     category_order = ['Genomics', 'Transcriptomics', 'Metabolomics', 'Proteomics',
-                      'Multi-omics', 'General_omics', 'Chinese Literature']
+                      'Multi-omics', 'General Omics', 'Chinese Literature']
     pivot_data = pivot_data[[col for col in category_order if col in pivot_data.columns]]
 
     # Apply hierarchical clustering to rows (subcategories)

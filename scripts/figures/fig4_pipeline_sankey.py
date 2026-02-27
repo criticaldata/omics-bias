@@ -6,7 +6,8 @@ import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
 from mapper import (load_data, get_category_color, normalize_subcategories,
-                   STAGE_MAP, merge_semantic_keywords, shorten_bias)
+                   STAGE_MAP, merge_semantic_keywords, shorten_bias,
+                   reassign_chinese_categories)
 
 def create_pipeline_sankey():
     # Set random seed for reproducibility
@@ -16,6 +17,7 @@ def create_pipeline_sankey():
     # Load data
     df = load_data()
     df = normalize_subcategories(df)
+    df = reassign_chinese_categories(df)
     df['Pipeline_Stage'] = df['Subcategory'].map(STAGE_MAP).fillna('Other Challenges')
     df = merge_semantic_keywords(df)
 

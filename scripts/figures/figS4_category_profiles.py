@@ -5,7 +5,7 @@ Small multiples showing top 10 biases for each omics category
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from mapper import load_data, get_category_color, save_figure, shorten_bias, merge_semantic_keywords
+from mapper import load_data, get_category_color, save_figure, shorten_bias, merge_semantic_keywords, reassign_chinese_categories
 
 def create_category_profiles():
     """Create small multiple bar charts for each category"""
@@ -22,13 +22,13 @@ def create_category_profiles():
     # Set random seed
     np.random.seed(42)
 
-    # Load data and merge semantic keywords
+    # Load data, redistribute Chinese Literature, and merge semantic keywords
     df = load_data()
+    df = reassign_chinese_categories(df)
     df = merge_semantic_keywords(df)
 
-    # Get categories and filter out 'Chinese Literature'
+    # Get categories (Chinese Literature already redistributed into respective omics)
     categories = sorted(df['Category'].unique())
-    categories = [cat for cat in categories if cat != 'Chinese Literature']
     n_categories = len(categories)
 
     # Create figure with subplots (Changed to 2x3 since we now have exactly 6 categories)

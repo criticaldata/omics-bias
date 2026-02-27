@@ -23,7 +23,7 @@ def create_cross_omics_heatmap():
 
     # Order categories for better visualization
     category_order = ['Genomics', 'Transcriptomics', 'Proteomics', 'Metabolomics',
-                      'Multi-omics', 'General_omics', 'Chinese Literature']
+                      'Multi-omics', 'General Omics', 'Chinese Literature']
 
     # Reorder columns
     freq_matrix = freq_matrix[[col for col in category_order if col in freq_matrix.columns]]

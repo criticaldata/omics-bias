@@ -15,7 +15,8 @@ CATEGORY_COLORS = {
     'Metabolomics': '#e67e22',  # Orange
     'Proteomics': '#9b59b6',  # Purple
     'Multi-omics': '#e74c3c',  # Red
-    'General_omics': '#f39c12',  # Yellow/Gold
+    'General Omics': '#f39c12',  # Yellow/Gold (Q11: display name for General_omics)
+    'General_omics': '#f39c12',  # Legacy alias — CSV uses underscore form
     'Chinese Literature': '#1abc9c'  # Teal
 }
 
@@ -24,6 +25,8 @@ SUBCATEGORY_MAP = {
     # Data Production
     "Data production bias": "Data Production Biases",
     "Data Production/Pre Analysis Bias": "Data Production Biases",
+    # Q8: "Prediction" aspect also touches Computational/Analytical, but team
+    # agreed to keep 1:1 mapping here and note the dual nature in paper text.
     "Data / Prediction Biases": "Data Production Biases",
     "Data Production / Pre-Analytical Biases": "Data Production Biases",
     "Data Production Biases": "Data Production Biases",
@@ -117,6 +120,38 @@ CHINESE_KEYWORD_MAP = {
     #   Indigenous/rural communities ≠ legal/technical GDPR/HIPAA data restriction
     #   — confirmed by Yichun, 2026-02-16)
     "Resource Inequality & Economic Barriers": "High cost / resource barriers",
+}
+
+# Chinese Literature keyword → target omics category for redistribution.
+# Used by figures that show per-category breakdowns (Sankey, category profiles)
+# so Chinese Literature data flows into the owning omics category instead of
+# appearing as a separate meta-review category.
+CHINESE_CATEGORY_REASSIGN = {
+    # → Genomics (5)
+    "Participation–power limitation": "Genomics",
+    "Small Sample Size & Recruitment Barriers": "Genomics",
+    "Population Underrepresentation": "Genomics",
+    "Short-read sequencing limitations": "Genomics",
+    "Haplotype phasing & complex admixture errors": "Genomics",
+    # → Multi-omics (4)
+    "Handling-related variability bias": "Multi-omics",
+    "Allelic dropout & coverage bias": "Multi-omics",
+    "Data Integration Challenges": "Multi-omics",
+    "Clinical translation barriers": "Multi-omics",
+    # → Metabolomics (2)
+    "Metabolomics technical limits": "Metabolomics",
+    "Taxonomic & naming conflicts": "Metabolomics",
+    # → Proteomics (1)
+    "Database dependence & annotation bias": "Proteomics",
+    # → General Omics (8) — shared across categories or truly unique
+    "Batch effects & platform variability": "General Omics",
+    "Database-driven coverage gaps": "General Omics",
+    "Subjectivity in analysis thresholds": "General Omics",
+    "Reference Genome & Database Bias": "General Omics",
+    "Reproducibility & validation gaps": "General Omics",
+    "Resource Inequality & Economic Barriers": "General Omics",
+    "Context-driven missingness bias": "General Omics",
+    "Ethical, Consent & Cultural Barriers": "General Omics",
 }
 
 # Short display names for long bias keywords (used in labels, legends, etc.)
@@ -223,6 +258,9 @@ KEYWORD_MERGE_MAP = {
     "Sample Heterogeneity & Variability": "Sample Heterogeneity",
     "Sample Selection Bias & Heterogeneity": "Sample Heterogeneity",
     # 3. Standardization cluster (includes typo fix)
+    # Q4 resolved: all 7 kept here. "& Reproducibility" and "/Validation" stay because
+    # standardization is the primary concept (the qualifier describes *what* lacks standards).
+    # Explicit reproducibility/validation keywords live in cluster 6 (Q10). No overlap.
     "Lack of Standardization & Benchmarks": "Lack of Standardization",
     "Lack of Standardization & Interoperability": "Lack of Standardization",
     "Lack of Standardization & Reproducibility": "Lack of Standardization",
@@ -242,6 +280,15 @@ KEYWORD_MERGE_MAP = {
     # 6. Reproducibility & validation cluster (cost removed per Osama)
     "Reproducibility & Correlation/Causation": "Reproducibility & Validation",
     "Reproducibility & validation gaps": "Reproducibility & Validation",
+    # Q10 additions (Marianna confirmed all 6 belong here, 2026-02-27):
+    # Each keyword touches reproducibility/validation but was phrased differently
+    # by different curators. Merging prevents double-counting across categories.
+    "lack of transparency in methods & Reproducibility": "Reproducibility & Validation",  # Metabolomics, 18 cit
+    "Lack of Validation & Replication": "Reproducibility & Validation",  # Multi-omics, 13 cit
+    "Validation\u2013infrastructure mismatch": "Reproducibility & Validation",  # General_omics, 18 cit
+    "Need for Experimental Validation": "Reproducibility & Validation",  # Proteomics, 2 cit
+    "Lack of Benchmarks/Validation": "Reproducibility & Validation",  # Transcriptomics, 12 cit
+    "Reproducibility & Over-interpretation": "Reproducibility & Validation",  # Proteomics, 6 cit
     # 7. Algorithmic/model bias cluster
     "Algorithm & Model Bias (especially AI/ML)": "Algorithmic / Model Bias",
     "Algorithmic/Model Bias": "Algorithmic / Model Bias",
@@ -300,6 +347,28 @@ def normalize_chinese_keywords(df):
     return df
 
 
+def reassign_chinese_categories(df):
+    """Redistribute Chinese Literature rows into their respective omics categories.
+
+    Reassigns the Category column using CHINESE_CATEGORY_REASSIGN, then
+    normalizes keyword text via CHINESE_KEYWORD_MAP. Both operations target
+    the same row indices (identified before any changes).
+    """
+    df = df.copy()
+    chinese_idx = df.index[df['Category'] == 'Chinese Literature']
+    # Step 1: reassign category using original Chinese keywords
+    df.loc[chinese_idx, 'Category'] = (
+        df.loc[chinese_idx, 'Final_Keyword'].map(CHINESE_CATEGORY_REASSIGN)
+        .fillna('General Omics')
+    )
+    # Step 2: normalize keywords (replace Chinese phrasing with equivalents)
+    df.loc[chinese_idx, 'Final_Keyword'] = (
+        df.loc[chinese_idx, 'Final_Keyword'].map(CHINESE_KEYWORD_MAP)
+        .fillna(df.loc[chinese_idx, 'Final_Keyword'])
+    )
+    return df
+
+
 def load_data(data_path='data/bias.csv'):
     """Load and preprocess the bias data"""
     # Get the project root directory (2 levels up from scripts/figures/)
@@ -326,6 +395,9 @@ def load_data(data_path='data/bias.csv'):
     df['Category'] = df['Category'].str.strip()
     df['Subcategory'] = df['Subcategory'].str.strip()
     df['Final_Keyword'] = df['Final_Keyword'].str.strip()
+
+    # Q11: display-friendly category name (CSV stores "General_omics")
+    df['Category'] = df['Category'].replace('General_omics', 'General Omics')
 
     return df
 

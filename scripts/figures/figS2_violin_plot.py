@@ -35,7 +35,7 @@ def create_violin_plot():
     # Load data - exclude non-omics-specific categories
     # (they aggregate biases across multiple fields, inflating citations)
     df = load_data()
-    excluded = {'Multi-omics', 'General_omics', 'Chinese Literature'}
+    excluded = {'Multi-omics', 'General Omics', 'Chinese Literature'}
     df = df[~df['Category'].isin(excluded)].copy()
 
     # Define category order (4 omics-specific categories)
@@ -142,7 +142,7 @@ def create_violin_plot():
 
     # Print summary statistics
     print("\n=== Violin Plot Summary (Omics-Specific Categories Only) ===")
-    print("Excluded: Multi-omics, General_omics, Chinese Literature")
+    print("Excluded: Multi-omics, General Omics, Chinese Literature")
     print("\nDescriptive statistics by category:")
     for cat in category_order:
         cat_data = df[df['Category'] == cat]['Final count']

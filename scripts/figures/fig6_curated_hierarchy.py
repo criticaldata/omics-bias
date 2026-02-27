@@ -4,7 +4,7 @@ Clearer hierarchical view using sunburst chart instead of treemap
 """
 import pandas as pd
 import plotly.graph_objects as go
-from mapper import load_data, get_category_color, save_plotly_figure, normalize_subcategories
+from mapper import load_data, get_category_color, save_plotly_figure, normalize_subcategories, STAGE_MAP
 import numpy as np
 
 def create_curated_hierarchy():
@@ -46,8 +46,8 @@ def create_curated_hierarchy():
         for subcat in cat_df['Subcategory'].unique():
             subcat_df = cat_df[cat_df['Subcategory'] == subcat]
 
-            # Shorten subcategory name
-            short_subcat = subcat if len(subcat) < 30 else subcat[:27] + '...'
+            # Use short stage name from STAGE_MAP (Q7: avoids truncation)
+            short_subcat = STAGE_MAP.get(subcat, subcat)
 
             labels.append(short_subcat)
             parents.append(cat)

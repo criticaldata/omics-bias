@@ -1,6 +1,6 @@
 """
 Supplementary Figure S3: Violin/Box Plot - Aggregated Category Distributions
-Shows citation count distributions for Multi-omics, General_omics, and Chinese Literature,
+Shows citation count distributions for Multi-omics, General Omics, and Chinese Literature,
 which are excluded from S2 because they aggregate biases across multiple fields.
 """
 import pandas as pd
@@ -28,15 +28,15 @@ def draw_significance_bar(ax, x1, x2, y, p_corrected, h=0.5, lw=1.2):
 
 
 def create_aggregated_violin_plot():
-    """Create violin plot for aggregated categories (Multi-omics, General_omics, Chinese Literature)."""
+    """Create violin plot for aggregated categories (Multi-omics, General Omics, Chinese Literature)."""
     np.random.seed(42)
 
     df = load_data()
     # Include ONLY the 3 aggregated categories (excluded from S2)
-    included = {'Multi-omics', 'General_omics', 'Chinese Literature'}
+    included = {'Multi-omics', 'General Omics', 'Chinese Literature'}
     df = df[df['Category'].isin(included)].copy()
 
-    category_order = ['Multi-omics', 'General_omics', 'Chinese Literature']
+    category_order = ['Multi-omics', 'General Omics', 'Chinese Literature']
     palette = [get_category_color(cat) for cat in category_order]
 
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 9))
@@ -130,7 +130,7 @@ def create_aggregated_violin_plot():
 
     # Print summary
     print("\n=== Aggregated Category Violin Plot Summary ===")
-    print("Categories: Multi-omics, General_omics, Chinese Literature")
+    print("Categories: Multi-omics, General Omics, Chinese Literature")
     print("\nDescriptive statistics by category:")
     for cat in category_order:
         cat_data = df[df['Category'] == cat]['Final count']

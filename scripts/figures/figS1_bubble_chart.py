@@ -26,7 +26,7 @@ def create_bubble_chart():
     fig, ax = plt.subplots(figsize=(18, 12))
 
     # Define category order for y-axis
-    category_order = ['Chinese Literature', 'General_omics', 'Multi-omics', 'Proteomics',
+    category_order = ['Chinese Literature', 'General Omics', 'Multi-omics', 'Proteomics',
                       'Metabolomics', 'Transcriptomics', 'Genomics']
 
     # Define subcategory order for x-axis
