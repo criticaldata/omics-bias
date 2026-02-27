@@ -9,9 +9,18 @@ from matplotlib.patches import Wedge, Circle, Patch
 from mapper import (load_data, save_figure, normalize_subcategories,
                     STAGE_MAP, STAGE_COLORS, shorten_bias)
 
-
 def create_lifecycle_diagram():
-    """Create circular lifecycle diagram with real bias data"""
+    """Create circular lifecycle diagram with real bias data suitable for publication"""
+    
+    # Configure Matplotlib for Nature-style publication standards
+    plt.rcParams.update({
+        'font.family': 'sans-serif',
+        'font.sans-serif': ['Arial', 'Helvetica', 'DejaVu Sans'],
+        'pdf.fonttype': 42,  # Ensures text is editable in PDF/EPS (Nature requirement)
+        'ps.fonttype': 42,
+        'svg.fonttype': 'none'
+    })
+
     # Load data with normalized subcategories
     df = load_data()
     df = normalize_subcategories(df)
@@ -56,8 +65,8 @@ def create_lifecycle_diagram():
                      width=outer_radius-inner_radius,
                      facecolor=stage_colors[stage],
                      edgecolor='white',
-                     linewidth=3,
-                     alpha=0.85)
+                     linewidth=4, # Slightly thicker borders for high-res clarity
+                     alpha=0.9)   # Slightly increased opacity for better contrast
         ax.add_patch(wedge)
 
         # Calculate position for stage number (just outside the wedge)
@@ -66,10 +75,10 @@ def create_lifecycle_diagram():
         label_x = center[0] + label_radius * np.cos(label_angle)
         label_y = center[1] + label_radius * np.sin(label_angle)
 
-        # Add stage number
+        # Add stage number (Increased size from 20 to 36)
         ax.text(label_x, label_y, f"{i + 1}",
                ha='center', va='center',
-               fontsize=20, fontweight='bold',
+               fontsize=36, fontweight='bold',
                color='white',
                bbox=dict(boxstyle='circle,pad=0.3', facecolor=stage_colors[stage],
                         edgecolor='white', linewidth=3))
@@ -82,26 +91,28 @@ def create_lifecycle_diagram():
 
         bias_text = '\n'.join([f"• {b}" for b in stages_data[stage]])
 
+        # Add bias text (Increased size from 15 to 26)
         ax.text(text_x, text_y, bias_text,
                ha='center', va='center',
-               fontsize=15,
+               fontsize=26,
                rotation=0,
                color='white',
                fontweight='bold',
                bbox=dict(boxstyle='round,pad=0.6',
                         facecolor=stage_colors[stage],
-                        alpha=0.9, edgecolor='white', linewidth=1.5))
+                        alpha=0.9, edgecolor='white', linewidth=2))
 
     # Draw center circle with title
     center_circle = Circle(center, inner_radius,
                           facecolor='white',
                           edgecolor='#34495E',
-                          linewidth=4)
+                          linewidth=5)
     ax.add_patch(center_circle)
 
+    # Center text (Increased size from 20 to 40)
     ax.text(center[0], center[1], 'Research\nPipeline',
            ha='center', va='center',
-           fontsize=20, fontweight='bold',
+           fontsize=40, fontweight='bold',
            color='#2C3E50')
 
     # Set axis limits and remove axes
@@ -109,21 +120,18 @@ def create_lifecycle_diagram():
     ax.set_ylim(0, 1)
     ax.axis('off')
 
-    # Add title
-    # fig.suptitle('Omics Research Pipeline - Top Biases by Stage',
-    #             fontsize=18, fontweight='bold', y=0.96, color='#2C3E50')
-
-    # Add legend
+    # Add legend (Increased sizes, pushed slightly further right to avoid overlapping larger text)
     legend_elements = [Patch(facecolor=stage_colors[stage], label=f"{i+1}. {stage}")
                       for i, stage in enumerate(stages)]
 
-    ax.legend(handles=legend_elements, loc='center left', bbox_to_anchor=(1.05, 0.5),
-             fontsize=14, frameon=True, title='Pipeline Stages', title_fontsize=15)
+    ax.legend(handles=legend_elements, loc='center left', bbox_to_anchor=(1.08, 0.5),
+             fontsize=22, frameon=True, title='Pipeline Stages', title_fontsize=26)
 
     plt.tight_layout()
 
-    # Save figure
-    save_figure(fig, 'fig1_1_lifecycle.png', output_dir='figures/main')
+    # Save figure (Recommended to save as PDF or EPS for Nature)
+    save_figure(fig, 'fig1_1_lifecycle.pdf', output_dir='figures/main')
+    save_figure(fig, 'fig1_1_lifecycle.png', output_dir='figures/main') # Keep PNG for quick viewing
 
     # Print summary
     print("\n=== Lifecycle Diagram Summary ===")
@@ -133,12 +141,6 @@ def create_lifecycle_diagram():
         stage_df = df[df['Pipeline_Stage'] == stage].nlargest(5, 'Final count')
         for idx, row in stage_df.iterrows():
             print(f"  • {row['Final_Keyword']} ({int(row['Final count'])} citations)")
-
-    print("\n\nTotal citations by stage:")
-    for stage in stages:
-        total = df[df['Pipeline_Stage'] == stage]['Final count'].sum()
-        count = len(df[df['Pipeline_Stage'] == stage])
-        print(f"  {stage}: {int(total)} citations ({count} biases)")
 
     return fig
 
