@@ -17,6 +17,7 @@ figure_times = {}
 
 # List of figure scripts to run
 main_figures = [
+    ('fig0_prisma.py', 'Figure 0: PRISMA Diagram'),
     ('fig1_heatmap.py', 'Figure 1: Overview Heatmap'),
     ('fig1_1_lifecycle.py', 'Figure 1.1: Lifecycle Diagram'),
     ('fig1_2_pipeline_bars.py', 'Figure 1.2: Pipeline Bars'),
