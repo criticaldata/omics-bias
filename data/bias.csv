@@ -8,21 +8,21 @@ Genomics,Computational/Analytical Bias,Filtering strategy ,12,Variant Interpreta
 Genomics,Technical/Instrumental biases,Standardization / reproducibility,2,Cost of Technology,3,FALSE,SEBASTIAN,Cost of Technology,5
 Genomics,Technical/Instrumental biases,Processing / computation,2,Hardware Performance Limitations,3,FALSE,SEBASTIAN,Processing / computation,2
 Genomics,Technical/Instrumental biases,Sampling bias,1,Variable Assembly Quality,1,FALSE,SEBASTIAN,Sampling bias &  Variable Assembly Quality,3
-Metabolomics,Data Production/Pre Analysis Bias,Sample Selection Bias,17,"Sample Heterogeneity (biological, population, type)",3,FALSE,SEBASTIAN,Sample Selection Bias & Heterogeneity,20
-Metabolomics,Data Production/Pre Analysis Bias,Cohort Heterogeneity,14,"Confounders (diet, lifestyle, disease state)",11,FALSE,SEBASTIAN,Cohort Heterogeneity & Confounders,24
-Metabolomics,Data Production/Pre Analysis Bias,Environmental Confounders,11,Lack of Standardized Protocols/SOPs,8,FALSE,SEBASTIAN,Lack of Standardized Protocols/SOPs,8
-Metabolomics,Data Production/Pre Analysis Bias,Diet & Lifestyle Effects,9,Lack of Reference Materials/Standards,7,FALSE,SEBASTIAN,Lack of Reference Materials/Standards,7
-Metabolomics,Instrumental / Technical / Hardware Bias,Batch effects,17,Instrument Differences,24,FALSE,SEBASTIAN,Batch effects &  Instrument Differences,31
-Metabolomics,Instrumental / Technical / Hardware Bias,"Platform differences (MS, NMR, GC, LC, Orbitrap, QToF, etc.)",2,"Sensitivity, Specificity & Coverage Limitations",12,FALSE,SEBASTIAN,"Platform differences & Sensitivity, Specificity & Coverage Limitations",14
-Metabolomics,Instrumental / Technical / Hardware Bias,"Sensitivity limitations (low-abundance metabolites, detection limits)",12,Matrix Effects ,6,FALSE,SEBASTIAN,Sensitivity limitations & Matrix Effects ,18
-Metabolomics,Analytical / Software / Computational Bias,batch correction / effects,16,Metabolite Annotation,22,FALSE,SEBASTIAN,batch correction / effects & Metabolite Annotation,28
+Metabolomics,Data Production/Pre Analysis Bias,Sample Selection Bias,17,"Sample Heterogeneity (biological, population, type)",3,FALSE,SEBASTIAN,Sample Selection Bias & Heterogeneity,18
+Metabolomics,Data Production/Pre Analysis Bias,Cohort Heterogeneity,14,"Confounders (diet, lifestyle, disease state)",11,FALSE,SEBASTIAN,Cohort Heterogeneity & Confounders,21
+Metabolomics,Data Production/Pre Analysis Bias,Environmental Confounders,11,Lack of Standardized Protocols/SOPs,8,FALSE,SEBASTIAN,Lack of Standardized Protocols/SOPs,7
+Metabolomics,Data Production/Pre Analysis Bias,Diet & Lifestyle Effects,9,Lack of Reference Materials/Standards,7,FALSE,SEBASTIAN,Lack of Reference Materials/Standards,6
+Metabolomics,Instrumental / Technical / Hardware Bias,Batch effects,17,Instrument Differences,24,FALSE,SEBASTIAN,Batch effects &  Instrument Differences,27
+Metabolomics,Instrumental / Technical / Hardware Bias,"Platform differences (MS, NMR, GC, LC, Orbitrap, QToF, etc.)",2,"Sensitivity, Specificity & Coverage Limitations",12,FALSE,SEBASTIAN,"Platform differences & Sensitivity, Specificity & Coverage Limitations",11
+Metabolomics,Instrumental / Technical / Hardware Bias,"Sensitivity limitations (low-abundance metabolites, detection limits)",12,Matrix Effects ,6,FALSE,SEBASTIAN,Sensitivity limitations & Matrix Effects ,15
+Metabolomics,Analytical / Software / Computational Bias,batch correction / effects,16,Metabolite Annotation,22,FALSE,SEBASTIAN,batch correction / effects & Metabolite Annotation,25
 Metabolomics,Analytical / Software / Computational Bias,Feature detection,14,"Lack of Standardization (workflows, tools, pipelines)",3,FALSE,SEBASTIAN,Feature detection ,17
-Metabolomics,Analytical / Software / Computational Bias,Lack of standardization in workflows,11,Batch Correction Challenges,10,FALSE,SEBASTIAN,Lack of standarization,3
-Metabolomics,Reporting / Interpretation / Post-Analysis Bias,lack of transparency in methods,10,Reproducibility,8,FALSE,SEBASTIAN,lack of transparency in methods & Reproducibility,18
-Metabolomics,Reporting / Interpretation / Post-Analysis Bias,Overinterpretation of findings (esp. biomarkers),9,Insufficient FAIR Data Compliance & Data Sharing,7,FALSE,MARLENE,Overinterpretation of findings (esp. biomarkers),9
-Metabolomics,Other Biases / Challenges / Limitations,Cross-study / inter-laboratory comparability issues,13,"Clinical Translation Barriers (validation, regulation, cost)",11,FALSE,MARLENE,Cross-study / inter-laboratory comparability issues,13
-Metabolomics,Other Biases / Challenges / Limitations,High cost / resource barriers,12,Multi-omics Integration Challenges,8,FALSE,MARLENE,High cost / resource barriers,12
-Metabolomics,Other Biases / Challenges / Limitations,Large fraction of unannotated / unknown metabolites,11,"Complexity (Biological, Technical, Data)",7,FALSE,MARLENE,Large fraction of unannotated / unknown metabolites,11
+Metabolomics,Analytical / Software / Computational Bias,Lack of standardization in workflows,11,Batch Correction Challenges,10,FALSE,SEBASTIAN,Lack of standarization,2
+Metabolomics,Reporting / Interpretation / Post-Analysis Bias,lack of transparency in methods,10,Reproducibility,8,FALSE,SEBASTIAN,lack of transparency in methods & Reproducibility,17
+Metabolomics,Reporting / Interpretation / Post-Analysis Bias,Overinterpretation of findings (esp. biomarkers),9,Insufficient FAIR Data Compliance & Data Sharing,7,FALSE,MARLENE,Overinterpretation of findings (esp. biomarkers),8
+Metabolomics,Other Biases / Challenges / Limitations,Cross-study / inter-laboratory comparability issues,13,"Clinical Translation Barriers (validation, regulation, cost)",11,FALSE,MARLENE,Cross-study / inter-laboratory comparability issues,9
+Metabolomics,Other Biases / Challenges / Limitations,High cost / resource barriers,12,Multi-omics Integration Challenges,8,FALSE,MARLENE,High cost / resource barriers,10
+Metabolomics,Other Biases / Challenges / Limitations,Large fraction of unannotated / unknown metabolites,11,"Complexity (Biological, Technical, Data)",7,FALSE,MARLENE,Large fraction of unannotated / unknown metabolites,10
 Transcriptomics,Data / Prediction Biases,Detection bias for low-expression or low-abundance RNAs,18,Sample Preservation & Dissociation Artifacts,16,FALSE,MARLENE,Detection bias for low-expression or low-abundance RNAs,18
 Transcriptomics,Data / Prediction Biases,Spot-level mixing / doublets / loss of single-cell resolution,13,Low Abundance / Rare Cell Type Detection Issues,8,FALSE,MARLENE,Spot-level mixing / doublets / loss of single-cell resolution,13
 Transcriptomics,Data / Prediction Biases,"Ambiguous read assignment (antisense, overlapping, isoforms)",11,Confounding Factors & Biological Heterogeneity,7,FALSE,MARLENE,"Ambiguous read assignment (antisense, overlapping, isoforms)",11
@@ -90,16 +90,16 @@ Genomics,Computational/Analytical Bias,Lack of standardization / QC thresholds,1
 Genomics,Computational/Analytical Bias,Computational resources / infrastructure,10,"Computational Bottlenecks (Scale, Cost, Speed)",5,TRUE,,Computational Bottlenecks/Resources,
 Genomics,Technical/Instrumental biases,Sequencing technology / resolution,8,Sequencing Technology Limitations & Errors,8,TRUE,,Sequencing Technology Limitations,
 Genomics,Technical/Instrumental biases,Infrastructure / cost / access,3,Lack of Infrastructure/Technology (in specific regions),3,TRUE,,Infrastructure/Cost/Access,
-Metabolomics,Data Production/Pre Analysis Bias,Pre-analytical Variability,22,"Pre-analytical Variability (collection, handling, storage)",22,TRUE,,Pre-analytical Variability,
-Metabolomics,Instrumental / Technical / Hardware Bias,Instrument drift,19,Instrument Drift & Batch Effects,21,TRUE,,Instrument Drift & Batch Effects,
-Metabolomics,Instrumental / Technical / Hardware Bias,Calibration / maintenance issues,13,Instrument Calibration & Maintenance Issues,10,TRUE,,Calibration & Maintenance,
-Metabolomics,Analytical / Software / Computational Bias,Incomplete or inconsistent metabolite annotation/databases,13,Data Processing & Normalization Variability,16,TRUE,,Data Processing & Annotation/Database Issues,
-Metabolomics,Analytical / Software / Computational Bias,"Pipeline/software variability (different tools, versions, parameters)",12,Database Gaps / Incomplete Libraries,11,TRUE,,Pipeline Variability & Database Gaps,
-Metabolomics,Reporting / Interpretation / Post-Analysis Bias,Incomplete / missing metadata,15,Incomplete/Inconsistent Methods & Metadata Reporting,24,TRUE,,Incomplete Metadata/Methods Reporting,
-Metabolomics,Reporting / Interpretation / Post-Analysis Bias,Underreporting of negative or null results,13,"Underreporting (negative findings, QC, validation)",15,TRUE,,Underreporting of Negative Results,
-Metabolomics,Reporting / Interpretation / Post-Analysis Bias,Inconsistent reporting standards / workflows,12,Lack of Standardization in Reporting,11,TRUE,,Lack of Standardized Reporting,
-Metabolomics,Other Biases / Challenges / Limitations,"Integration across omics layers (multi-omics, data harmonization)",14,Lack of Standardization & Harmonization (General),15,TRUE,,Lack of Standardization/Harmonization,
-Metabolomics,Other Biases / Challenges / Limitations,Limited longitudinal evidence / underpowered studies,11,High Cost & Expertise Barriers,7,TRUE,,High Cost/Resource Barriers,
+Metabolomics,Data Production/Pre Analysis Bias,Pre-analytical Variability,22,"Pre-analytical Variability (collection, handling, storage)",22,TRUE,,Pre-analytical Variability,18
+Metabolomics,Instrumental / Technical / Hardware Bias,Instrument drift,19,Instrument Drift & Batch Effects,21,TRUE,,Instrument Drift & Batch Effects,16
+Metabolomics,Instrumental / Technical / Hardware Bias,Calibration / maintenance issues,13,Instrument Calibration & Maintenance Issues,10,TRUE,,Calibration & Maintenance,11
+Metabolomics,Analytical / Software / Computational Bias,Incomplete or inconsistent metabolite annotation/databases,13,Data Processing & Normalization Variability,16,TRUE,,Data Processing & Annotation/Database Issues,9
+Metabolomics,Analytical / Software / Computational Bias,"Pipeline/software variability (different tools, versions, parameters)",12,Database Gaps / Incomplete Libraries,11,TRUE,,Pipeline Variability & Database Gaps,8
+Metabolomics,Reporting / Interpretation / Post-Analysis Bias,Incomplete / missing metadata,15,Incomplete/Inconsistent Methods & Metadata Reporting,24,TRUE,,Incomplete Metadata/Methods Reporting,11
+Metabolomics,Reporting / Interpretation / Post-Analysis Bias,Underreporting of negative or null results,13,"Underreporting (negative findings, QC, validation)",15,TRUE,,Underreporting of Negative Results,10
+Metabolomics,Reporting / Interpretation / Post-Analysis Bias,Inconsistent reporting standards / workflows,12,Lack of Standardization in Reporting,11,TRUE,,Lack of Standardized Reporting,9
+Metabolomics,Other Biases / Challenges / Limitations,"Integration across omics layers (multi-omics, data harmonization)",14,Lack of Standardization & Harmonization (General),15,TRUE,,Lack of Standardization/Harmonization,10
+Metabolomics,Other Biases / Challenges / Limitations,Limited longitudinal evidence / underpowered studies,11,High Cost & Expertise Barriers,7,TRUE,,High Cost/Resource Barriers,9
 Transcriptomics,Data / Prediction Biases,"Dropout events / zero inflation (false negatives, sparsity)",22,"Dropout Events, Sparsity & Zero Inflation",21,TRUE,,Dropout Events / Sparsity,
 Transcriptomics,Data / Prediction Biases,Length / GC-content / 3′-end capture biases,15,"Capture & Selection Bias (polyA, 3'-end, GC content)",13,TRUE,,Capture & Selection Bias,
 Transcriptomics,Technical / Instrumental Biases,"RNA degradation (FFPE, low input, dissociation, freezing, storage)",21,RNA Degradation & Quality Issues,11,TRUE,,RNA Degradation & Quality,

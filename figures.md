@@ -2,7 +2,7 @@
 
 **Paper:** "Bias in Omics Data Beyond Non-Representativeness" by Salarikia et al.
 **Data Source:** 145 bias entries across 7 omics categories from systematic literature review (2019-2024)
-**Last Updated:** 2026-02-27
+**Last Updated:** 2026-10-13
 
 ---
 
@@ -55,7 +55,7 @@ figures/
 
 ![Figure 1 - Heatmap](figures/main/png/fig1_heatmap.png)
 
-*This comprehensive heatmap displays the distribution of 2,041 citations across 5 bias subcategories (rows) and 7 omics fields (columns). Rows are hierarchically clustered to reveal related bias patterns, while color intensity represents citation counts with darker shades indicating higher frequency. The visualization reveals that General Omics - Data Production exhibits the highest concentration (103 citations), while the clustering pattern shows distinct field-specific bias profiles. Cell annotations provide exact citation counts for precise interpretation.*
+*This comprehensive heatmap displays the distribution of 1,978 citations across 5 bias subcategories (rows) and 7 omics fields (columns). Rows are hierarchically clustered to reveal related bias patterns, while color intensity represents citation counts with darker shades indicating higher frequency. The visualization reveals that General Omics - Data Production exhibits the highest concentration (103 citations), while the clustering pattern shows distinct field-specific bias profiles. Cell annotations provide exact citation counts for precise interpretation.*
 
 **How each cell value is calculated:** Each cell = sum of `Final count` from `data/bias.csv` for all individual bias keywords belonging to that (Category, Subcategory) pair. For example, Genomics × Data Production Biases = 49, which is the sum of 4 keywords: Selection/ascertainment (13) + Tissue/cell-type heterogeneity (13) + Lack of Population-Specific Databases (3) + Sample size/underpowered (4) + Ancestry/Population Bias (16). Subcategory names are normalized from 18 curator variants to 5 canonical stages (see [Subcategory Normalization](#subcategory-normalization)).
 
@@ -71,7 +71,7 @@ figures/
 
 ![Figure 1.1 - Lifecycle](figures/main/png/fig1_1_lifecycle.png)
 
-*This circular visualization maps bias distribution across the five canonical pipeline stages: (1) Data Production, (2) Technical/Instrumental, (3) Computational/Analytical, (4) Reporting/Interpretation, and (5) Other Challenges. Each wedge displays the top 3 most-cited biases within that stage using shortened labels for readability. Subcategory names are normalized from 18 curator variants to these 5 canonical stages (see [Subcategory Normalization](#subcategory-normalization)). Computational/Analytical shows the highest citation concentration (504 citations, 35 biases), followed by Data Production (479 citations) and Technical/Instrumental (471 citations). Reporting/Interpretation receives the least attention (176 citations, 15 biases), highlighting a gap in research focus on downstream transparency.*
+*This circular visualization maps bias distribution across the five canonical pipeline stages: (1) Data Production, (2) Technical/Instrumental, (3) Computational/Analytical, (4) Reporting/Interpretation, and (5) Other Challenges. Each wedge displays the top 3 most-cited biases within that stage using shortened labels for readability. Subcategory names are normalized from 18 curator variants to these 5 canonical stages (see [Subcategory Normalization](#subcategory-normalization)). Computational/Analytical shows the highest citation concentration (492 citations, 35 biases), followed by Data Production (468 citations) and Technical/Instrumental (456 citations). Reporting/Interpretation receives the least attention (164 citations, 15 biases), highlighting a gap in research focus on downstream transparency.*
 
 **Files:**
 - PNG: `figures/main/png/fig1_1_lifecycle.png`
@@ -85,7 +85,7 @@ figures/
 
 ![Figure 1.2 - Pipeline Bars](figures/main/png/fig1_2_pipeline_bars.png)
 
-*This bar chart maps bias distribution across the five canonical pipeline stages: (1) Data Production, (2) Technical/Instrumental, (3) Computational/Analytical, (4) Reporting/Interpretation, and (5) Other Challenges. For each stage, the three most-cited individual biases are displayed, with bar length proportional to citation count. Biases are pooled across all seven omics categories. For example: "Batch effects & instrument differences" (31 citations) originates primarily from metabolomics, while "Dropout events/sparsity" (22 citations) derives predominantly from transcriptomics. Subcategory names are normalized from 18 curator variants to these 5 canonical stages (see [Subcategory Normalization](#subcategory-normalization)). Computational/Analytical shows the highest citation concentration (504 citations), followed by Data Production (479 citations) and Technical/Instrumental (471 citations). Reporting/Interpretation contains the fewest reported biases (176 citations), suggesting that downstream transparency challenges may be underrepresented in the current literature.*
+*This bar chart maps bias distribution across the five canonical pipeline stages: (1) Data Production, (2) Technical/Instrumental, (3) Computational/Analytical, (4) Reporting/Interpretation, and (5) Other Challenges. For each stage, the three most-cited individual biases are displayed, with bar length proportional to citation count. Biases are pooled across all seven omics categories. For example: "Batch effects & instrument differences" (31 citations) originates primarily from metabolomics, while "Dropout events/sparsity" (22 citations) derives predominantly from transcriptomics. Subcategory names are normalized from 18 curator variants to these 5 canonical stages (see [Subcategory Normalization](#subcategory-normalization)). Computational/Analytical shows the highest citation concentration (492 citations), followed by Data Production (468 citations) and Technical/Instrumental (456 citations). Reporting/Interpretation contains the fewest reported biases (164 citations), suggesting that downstream transparency challenges may be underrepresented in the current literature.*
 
 **Files:**
 - PNG: `figures/main/png/fig1_2_pipeline_bars.png`
@@ -345,9 +345,9 @@ Multiple curators independently named the same bias concept using different phra
 
 ### Overall (from bias.csv)
 - **Total entries:** 145 biases
-- **Total citations:** 2,041
-- **Citation range:** 2-31
-- **Mean:** 14.08 citations/bias
+- **Total citations:** 1,978
+- **Citation range:** 2-27
+- **Mean:** 13.64 citations/bias
 
 ### By Category
 | Category | Entries | Citations | Mean | Median |
@@ -356,18 +356,18 @@ Multiple curators independently named the same bias concept using different phra
 | Multi-omics | 25 | 399 | 15.96 | 16.00 |
 | Transcriptomics | 20 | 314 | 15.70 | 15.00 |
 | Chinese Literature | 20 | 303 | 15.15 | 14.50 |
-| Metabolomics | 25 | 377 | 15.08 | 13.00 |
+| Metabolomics | 25 | 314 | 12.56 | 10.00 |
 | Genomics | 15 | 140 | 9.33 | 10.00 |
 | Proteomics | 20 | 124 | 6.20 | 6.00 |
 
 ### By Pipeline Stage
 | Stage | Citations | Biases | Percentage |
 |-------|-----------|--------|------------|
-| Computational/Analytical | 504 | 35 | 24.7% |
-| Data Production | 479 | 30 | 23.5% |
-| Technical/Instrumental | 471 | 35 | 23.1% |
-| Other Challenges | 411 | 30 | 20.1% |
-| Reporting/Interpretation | 176 | 15 | 8.6% |
+| Computational/Analytical | 492 | 35 | 24.9% |
+| Data Production | 468 | 30 | 23.7% |
+| Technical/Instrumental | 456 | 35 | 23.1% |
+| Other Challenges | 398 | 30 | 20.1% |
+| Reporting/Interpretation | 164 | 15 | 8.3% |
 
 ---
 
@@ -407,10 +407,10 @@ All scripts located in: `scripts/figures/`
 - **Critical implication:** Chinese-language literature independently validates English-source findings while contributing genuinely novel culture- and population-specific perspectives; multilingual systematic reviews remain essential to capture the full picture
 
 ### 2. Computational/Analytical Stage Dominates Research Attention
-- **Highest citation concentration:** 504 citations (24.7% of total 2,041 citations)
-- **Second highest:** Data Production biases (479 citations, 23.5%)
-- **Third:** Technical/Instrumental (471 citations, 23.1%)
-- **Lowest:** Reporting/Interpretation (176 citations, 8.6%)
+- **Highest citation concentration:** 492 citations (24.9% of total 1,978 citations)
+- **Second highest:** Data Production biases (468 citations, 23.7%)
+- **Third:** Technical/Instrumental (456 citations, 23.1%)
+- **Lowest:** Reporting/Interpretation (164 citations, 8.3%)
 - **Interpretation:** Most bias concern focuses on data processing and analysis rather than experimental design or reporting transparency
 
 ### 3. Batch Effects Are the Single Most Critical Bias
@@ -452,31 +452,31 @@ All scripts located in: `scripts/figures/`
 - **Implication:** Bias attention varies meaningfully across domains, justifying field-specific mitigation strategies
 
 ### 7. Data Production Biases Are Underappreciated
-- **Total citations:** 479 (23.5% of total)
+- **Total citations:** 468 (23.7% of total)
 - **Second place** in pipeline stage ranking by citations, but first in the research workflow
 - **Key data production biases:**
-  - Sample selection bias & heterogeneity (Metabolomics: 20 citations)
-  - Cohort heterogeneity & confounders (Metabolomics: 24 citations)
+  - Sample selection bias & heterogeneity (Metabolomics: 18 citations)
+  - Cohort heterogeneity & confounders (Metabolomics: 21 citations)
   - Sample handling, quality & degradation (Multi-omics: 19 citations)
 - **Risk:** Upstream biases cascade through entire pipeline, but receive less attention than downstream analysis biases
 
 ### 8. Reporting and Reproducibility Receive Insufficient Attention
-- **Lowest pipeline stage:** Only 176 citations (8.6%)
-- **Reproducibility & Validation cluster:** After merging 8 keyword variants (Q10), this cluster spans 6 categories with 69 combined citations — the most cross-cutting concern — yet Reporting/Interpretation remains the least-cited pipeline stage
+- **Lowest pipeline stage:** Only 164 citations (8.3%)
+- **Reproducibility & Validation cluster:** After merging 8 keyword variants (Q10), this cluster spans 6 categories with 68 combined citations — the most cross-cutting concern — yet Reporting/Interpretation remains the least-cited pipeline stage
 - **Critical reporting biases identified:**
-  - Incomplete metadata/methods reporting (Metabolomics: 15-24 citations)
-  - Underreporting of negative results (13-15 citations)
-  - Lack of standardized reporting (11-12 citations)
+  - Incomplete metadata/methods reporting (Metabolomics: 11-24 citations)
+  - Underreporting of negative results (10-15 citations)
+  - Lack of standardized reporting (9-12 citations)
   - Publication bias (Multi-omics)
 - **Implication:** Reporting transparency and reproducibility are widely acknowledged across fields but receive disproportionately low research attention relative to their cross-cutting impact
 
 ### 9. Top Subcategories Reveal Bias Hotspots
 **By total citations across all categories:**
-1. **Computational/Analytical Biases:** 504 citations (highest)
-2. **Data Production Biases:** 479 citations
-3. **Technical/Instrumental Biases:** 471 citations
-4. **Other Biases/Challenges:** 411 citations
-5. **Reporting/Interpretation Biases:** 176 citations (lowest)
+1. **Computational/Analytical Biases:** 492 citations (highest)
+2. **Data Production Biases:** 468 citations
+3. **Technical/Instrumental Biases:** 456 citations
+4. **Other Biases/Challenges:** 398 citations
+5. **Reporting/Interpretation Biases:** 164 citations (lowest)
 
 **Top specific subcategory-category combinations:**
 - General Omics → Data Production: 103 citations
@@ -496,7 +496,7 @@ All scripts located in: `scripts/figures/`
 ### 11. Standardization Gaps Persist Across All Omics Fields
 - **Data production:** Lack of standardized protocols/SOPs (Metabolomics: 8 citations)
 - **Analysis:** Lack of standardization in workflows/pipelines (Metabolomics: 3-11 citations)
-- **Reporting:** Lack of standardized reporting (11-12 citations)
+- **Reporting:** Lack of standardized reporting (9-12 citations)
 - **Integration:** Lack of standardization & harmonization (14-15 citations)
 - **Reference materials:** Lack of reference materials/standards (7 citations)
 - **Clinical translation:** Validation and clinical translation gaps (11 citations)
@@ -553,11 +553,12 @@ The following items were flagged during the audit. Please confirm or correct.
 
 ---
 
-**Last Updated:** 2026-02-27
-**Status:** All 13 figures implemented and generated
-**Data Source:** bias.csv (145 curated biases, 2,041 citations)
+**Last Updated:** 2026-10-13
+**Status:** All 14 figures implemented and generated (Fig. 0 PRISMA added 2026-10-13)
+**Data Source:** bias.csv (145 curated biases, 1,978 citations)
 
 ### Changelog
+0. **2026-10-13:** Four metabolomics studies (Bai 2021, Langdor 2024, Havelund 2023, Li 2022) removed from `data.xlsx` after the chapter proof; their contribution subtracted from the 25 metabolomics keyword counts in `bias.csv` by `scripts/remove_four_metabolomics_studies.py` (audit table in `data/removed_metabolomics_contribution.csv`). Metabolomics 377 to 314 citations, total 2,041 to 1,978; all figures regenerated. Fig. 0 (PRISMA, `fig0_prisma.py`) added. Reproducibility cluster 69 to 68 citations.
 1. **2026-02-27:** All Q&A items resolved (Q4, Q7, Q8, Q11). Q4: Standardization cluster kept as-is (7 variants, no overlap with Reproducibility cluster). Q7: Fig 6 sunburst uses `STAGE_MAP` short names instead of truncation. Q8: "Data / Prediction Biases" kept as Data Production (note dual nature in paper). Q11: "General_omics" renamed to "General Omics" in all displays.
 2. **2026-02-27:** Q10 resolved — 6 reproducibility/validation keywords added to Reproducibility & Validation cluster in `KEYWORD_MERGE_MAP` per Marianna. Cluster grows from 2→8 entries (69 combined citations).
 3. **2026-02-27:** Chinese Literature redistribution — added `CHINESE_CATEGORY_REASSIGN` to mapper.py. Fig 4 (Sankey) and Fig S4 (Category Profiles) now redistribute Chinese Literature biases into Genomics (5), Multi-omics (4), General Omics (8), Metabolomics (2), Proteomics (1). Q9 resolved.

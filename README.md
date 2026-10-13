@@ -57,7 +57,7 @@ All 11 tests should pass. If you encounter issues, see [CONTRIBUTING.md](CONTRIB
 
 ## Data
 
-Source data: `data/bias.csv` (145 curated biases, 2,041 citations across 7 omics fields)
+Source data: `data/bias.csv` (145 curated biases, 1,978 citations across 7 omics fields)
 
 ## More Information
 

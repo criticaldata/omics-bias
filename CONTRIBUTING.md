@@ -85,7 +85,7 @@ When adding new figure scripts or modifying existing ones:
 ```
 omics-bias/
 ├── data/
-│   └── bias.csv              # Source data (145 biases, 2,041 citations)
+│   └── bias.csv              # Source data (145 biases, 1,978 citations)
 ├── scripts/
 │   └── figures/
 │       ├── mapper.py         # Centralized mappings, utilities, and color schemes
@@ -117,7 +117,7 @@ All figures use `np.random.seed(42)` for reproducible layouts and jittering. To 
 
 1. **Same Python version:** Use Python 3.11 or 3.12
 2. **Same dependencies:** Install using `uv` or the exact versions in [pyproject.toml](pyproject.toml)
-3. **Same data:** Use the provided [data/bias.csv](data/bias.csv) (145 biases, 2,041 citations)
+3. **Same data:** Use the provided [data/bias.csv](data/bias.csv) (145 biases, 1,978 citations)
 4. **Run from repository root:** Always run scripts from the repository root directory
 
 ### Verification Steps
@@ -254,7 +254,7 @@ All dependencies are managed in [pyproject.toml](pyproject.toml):
 
 ## Data
 
-- **Source:** `data/bias.csv` (145 curated biases, 2,041 citations)
+- **Source:** `data/bias.csv` (145 curated biases, 1,978 citations)
 - **Categories:** 7 omics fields (Genomics, Transcriptomics, Proteomics, Metabolomics, Multi-omics, General_omics, Chinese Literature)
 - **Format:** CSV with columns: Category, Subcategory, Final_Keyword, Final count, etc.
 
